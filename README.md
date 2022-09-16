@@ -1,16 +1,12 @@
-# hello_world
+# Nhóm 20 - INT3020 40
+# Thành viên
+### - Nguyễn Hải Nam - 21020110
+### - Phạm Đức Thắng - 20020156
 
-A new Flutter project.
+# Báo cáo quá trình
 
-## Getting Started
+# Tuần 02 - Run "Hello World!"
++ Cài đặt Flutter và Android Studio, thực hiện code giao diện "hello world!"
++ Ảnh chụp màn hình run code, ảnh chụp màn hình điện thoại mô phỏng
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="Ảnh chụp Màn hình 2022-09-16 lúc 13.55.03.png" width="800" height="550"/>

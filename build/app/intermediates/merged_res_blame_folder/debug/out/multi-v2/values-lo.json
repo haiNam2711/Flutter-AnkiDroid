@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/hainam2711/Desktop/myDocument/workSpaceFlutter/five_control_widget/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-lo/values-lo.xml",
+            "outputFile": "D:\\Codelade\\Flutter-AnkiDroid\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-lo\\values-lo.xml",
             "map": [
                 {
-                    "source": "/Users/hainam2711/.gradle/caches/transforms-3/acbce933e4b464a5224ed377a62db1f5/transformed/core-1.6.0/res/values-lo/values-lo.xml",
+                    "source": "C:\\Users\\Buugee\\.gradle\\caches\\transforms-3\\acbce933e4b464a5224ed377a62db1f5\\transformed\\core-1.6.0\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

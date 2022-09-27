@@ -1,7 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-
 import 'SecondRoute.dart';
-
 
 class FirstRoute extends StatelessWidget {
   const FirstRoute({super.key});
@@ -10,14 +10,15 @@ class FirstRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: SideBar(),
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.menu,
-            ),
-            onPressed: () {},
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(
+          //     Icons.menu,
+          //   ),
+          //   onPressed: () {},
+          // ),
           title: Container(
             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: Column(
@@ -111,5 +112,73 @@ class FirstRoute extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SideBar extends StatelessWidget {
+  const SideBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          Image.asset('images/anki.png'),
+          const ListTile(
+            leading: Icon(Icons.manage_search),
+            title: Text('Decks'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.search),
+            title: Text('Card browser'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.dynamic_form),
+            title: Text('Statistics'),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 1,
+            child: Container(
+              color: Colors.grey,
+            ),
+          ),
+          const ListTile(
+            leading: Icon(Icons.mode_night),
+            title: Text('Night Mode'),
+            trailing: nightModeSwitch(),
+          ),
+          const ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.help),
+            title: Text('Help'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class nightModeSwitch extends StatefulWidget {
+  const nightModeSwitch({Key? key}) : super(key: key);
+
+  @override
+  State<nightModeSwitch> createState() => _nightModeSwitchState();
+}
+
+class _nightModeSwitchState extends State<nightModeSwitch> {
+  bool light = false;
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+        value: light,
+        onChanged: (bool value2) {
+          setState(() {
+            light = value2;
+          });
+        });
   }
 }

@@ -1,4 +1,0 @@
-#Tue Sep 27 19:35:02 ICT 2022
-base.0=D\:\\Codelade\\Flutter-AnkiDroid\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

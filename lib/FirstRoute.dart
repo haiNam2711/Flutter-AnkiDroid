@@ -19,7 +19,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
   late AnimationController moveController;
   late Animation<double> moveAnimation;
 
-  bool openedButton = false;
+  ValueNotifier<bool> openedButton = ValueNotifier<bool> (false);
 
   @override
   void initState() {
@@ -45,123 +45,134 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
       end: 300.0,
     ).animate(moveController);
 
-    openedButton = false;
-    //moveController.forward();
-    //rotateController.forward();
+    openedButton.value = false;
+//moveController.forward();
+//rotateController.forward();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+// TODO: implement dispose
     rotateController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        drawer: SideBar(),
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          // leading: IconButton(
-          //   icon: const Icon(
-          //     Icons.menu,
-          //   ),
-          //   onPressed: () {},
-          // ),
-          title: Container(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            child: Column(
-              children: const [
-                Text(
-                  'AnkiDroid',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        rotateController.reverse();
+        moveController.reverse();
+        openedButton.value = false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          drawer: SideBar(),
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            // leading: IconButton(
+            //   icon: const Icon(
+            //     Icons.menu,
+            //   ),
+            //   onPressed: () {},
+            // ),
+            title: Container(
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Column(
+                children: const [
+                  Text(
+                    'AnkiDroid',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  '10 cards due.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
+                  Text(
+                    '10 cards due.',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.refresh,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.more_vert,
+                ),
+              ),
+            ],
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.refresh,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.more_vert,
-              ),
-            ),
-          ],
-        ),
-        floatingActionButton: ControlButton(
-          context,
-          rotateController,
-          rotateAnimation,
-          moveController,
-          moveAnimation,
-          openedButton,
-        ),
-        body: ListView.builder(
-          itemCount: 9,
-          itemBuilder: (context, index) {
-            return Card(
-              color: index % 2 == 0 ? Colors.grey : Colors.white,
-              child: ListTile(
-                leading: Container(
-                  padding: EdgeInsets.only(top: 4.5),
-                  child: Text(
-                    'Default $index',
+          floatingActionButton: ControlButton(
+            context,
+            rotateController,
+            rotateAnimation,
+            moveController,
+            moveAnimation,
+            openedButton,
+          ),
+          body: ListView.builder(
+            itemCount: 9,
+            itemBuilder: (context, index) {
+              return Card(
+                color: index % 2 == 0 ? Colors.grey : Colors.white,
+                child: ListTile(
+                  leading: Container(
+                    padding: EdgeInsets.only(top: 4.5),
+                    child: Text(
+                      'Default $index',
+                    ),
                   ),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '1 ',
-                      style: TextStyle(
-                        color: Colors.blue.shade900,
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '1 ',
+                        style: TextStyle(
+                          color: Colors.blue.shade900,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      '2 ',
-                      style: TextStyle(
-                        color: Colors.red,
+                      const Text(
+                        '2 ',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '3',
-                      style: TextStyle(color: Colors.green.shade400),
-                    ),
-                  ],
+                      Text(
+                        '3',
+                        style: TextStyle(color: Colors.green.shade400),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    rotateController.reverse();
+                    moveController.reverse();
+                    openedButton.value = false;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SecondRoute()),
+                    );
+                  },
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SecondRoute()),
-                  );
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -176,7 +187,10 @@ class SideBar extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          Image.asset('images/anki.png'),
+          const Image(
+            image: AssetImage('images/anki.png'),
+            fit: BoxFit.fill,
+          ),
           const ListTile(
             leading: Icon(Icons.manage_search),
             title: Text('Decks'),

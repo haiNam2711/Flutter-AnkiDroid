@@ -10,7 +10,7 @@ Widget ControlButton(
     Animation<double> rotateAnimation,
     AnimationController moveController,
     Animation<double> moveAnimation,
-    bool openedButton,
+    ValueNotifier<bool> openedButton,
     ) {
   return Stack(
     children: <Widget>[
@@ -104,6 +104,7 @@ Widget ControlButton(
                             onPressed: () {
                               rotateController.reverse();
                               moveController.reverse();
+                              openedButton.value = !openedButton.value;
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -135,10 +136,10 @@ Widget ControlButton(
                   backgroundColor: Colors.blue,
                   child: const Icon(Icons.add),
                   onPressed: () {
-                    openedButton = !openedButton;
-                    if (openedButton) rotateController.forward();
+                    openedButton.value = !openedButton.value;
+                    if (openedButton.value) rotateController.forward();
                     else rotateController.reverse();
-                    if (openedButton) moveController.forward();
+                    if (openedButton.value) moveController.forward();
                     else moveController.reverse();
                   },
                 ),

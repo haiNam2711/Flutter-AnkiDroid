@@ -4,7 +4,7 @@ import 'FirstRoute.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Navigation Basics',
       home: FirstRoute(),

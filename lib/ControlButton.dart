@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:five_control_widget/AddScene.dart';
 import 'package:flutter/material.dart';
 
 Widget ControlButton(
@@ -42,6 +43,7 @@ Widget ControlButton(
                           padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                         ),
                         FloatingActionButton(
+                          heroTag: "creat deck",
                           mini: true,
                           backgroundColor: Colors.blue,
                           child: const Icon(Icons.folder),
@@ -68,6 +70,7 @@ Widget ControlButton(
                             padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                           ),
                           FloatingActionButton(
+                            heroTag: "get shard decks",
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: const Icon(Icons.download),
@@ -94,10 +97,19 @@ Widget ControlButton(
                             padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                           ),
                           FloatingActionButton(
+                            heroTag: "add",
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: const Icon(Icons.add),
-                            onPressed: () {},
+                            onPressed: () {
+                              rotateController.reverse();
+                              moveController.reverse();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AddScene()),
+                              );
+                            },
                           ),
                         ]
                     ),
@@ -119,6 +131,7 @@ Widget ControlButton(
               AnimatedBuilder(
                 animation: rotateAnimation,
                 child: FloatingActionButton(
+                  heroTag: "control",
                   backgroundColor: Colors.blue,
                   child: const Icon(Icons.add),
                   onPressed: () {

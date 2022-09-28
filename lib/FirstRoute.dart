@@ -3,9 +3,14 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'SecondRoute.dart';
 
-class FirstRoute extends StatelessWidget {
-  const FirstRoute({super.key});
+class FirstRoute extends StatefulWidget {
+  const FirstRoute({Key? key}) : super(key: key);
 
+  @override
+  State<FirstRoute> createState() => _FirstRouteState();
+}
+
+class _FirstRouteState extends State<FirstRoute> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -115,6 +120,7 @@ class FirstRoute extends StatelessWidget {
   }
 }
 
+
 class SideBar extends StatelessWidget {
   const SideBar({Key? key}) : super(key: key);
 
@@ -123,7 +129,10 @@ class SideBar extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          Image.asset('images/anki.png'),
+          const Image(
+            image: AssetImage('images/anki.png'),
+            fit: BoxFit.fill,
+          ),
           const ListTile(
             leading: Icon(Icons.manage_search),
             title: Text('Decks'),

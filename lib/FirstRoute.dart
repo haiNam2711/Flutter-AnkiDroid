@@ -1,11 +1,61 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'SecondRoute.dart';
+import 'ControlButton.dart';
 
-class FirstRoute extends StatelessWidget {
-  const FirstRoute({super.key});
+class FirstRoute extends StatefulWidget {
+  const FirstRoute({Key? key}) : super(key: key);
 
+  @override
+  State<FirstRoute> createState() => _FirstRouteState();
+}
+
+class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
+  late AnimationController rotateController;
+  late Animation<double> rotateAnimation;
+
+  late AnimationController moveController;
+  late Animation<double> moveAnimation;
+
+  bool openedButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    rotateController = AnimationController(
+      duration: Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    rotateAnimation = Tween<double>(
+      begin: 0.0,
+      end: pi / 4 * 3,
+    ).animate(rotateController);
+
+    moveController = AnimationController(
+      duration: Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    moveAnimation = Tween<double>(
+      begin: 0.0,
+      end: 300.0,
+    ).animate(moveController);
+
+    openedButton = false;
+    //moveController.forward();
+    //rotateController.forward();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    rotateController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,10 +111,13 @@ class FirstRoute extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
-          child: const Icon(Icons.add),
-          onPressed: () {},
+        floatingActionButton: ControlButton(
+          context,
+          rotateController,
+          rotateAnimation,
+          moveController,
+          moveAnimation,
+          openedButton,
         ),
         body: ListView.builder(
           itemCount: 9,

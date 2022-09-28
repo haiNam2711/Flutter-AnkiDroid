@@ -42,7 +42,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
 
     moveAnimation = Tween<double>(
       begin: 0.0,
-      end: 300.0,
+      end: 400.0,
     ).animate(moveController);
 
     openedButton.value = false;

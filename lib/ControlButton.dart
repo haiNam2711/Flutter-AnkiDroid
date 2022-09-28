@@ -122,7 +122,7 @@ Widget ControlButton(
                 builder: (context, child) => Transform.translate(
                   offset: Offset(
                       0.0,
-                      -moveAnimation.value + 300.0,
+                      -moveAnimation.value + 400.0,
                   ),
                   child: child,
                 ),

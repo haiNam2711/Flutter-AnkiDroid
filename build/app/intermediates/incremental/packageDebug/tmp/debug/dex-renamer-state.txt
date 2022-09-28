@@ -1,4 +1,0 @@
-#Fri Sep 23 15:14:45 ICT 2022
-base.0=/Users/hainam2711/Desktop/myDocument/workSpaceFlutter/five_control_widget/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

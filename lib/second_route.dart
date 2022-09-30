@@ -64,7 +64,7 @@ class _SecondRouteState extends State<SecondRoute> {
             ),
           ],
         ),
-        body: Center(),
+        body: const Center(),
       ),
     );
   }

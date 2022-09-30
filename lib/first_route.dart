@@ -1,9 +1,8 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'SecondRoute.dart';
-import 'ControlButton.dart';
+import 'second_route.dart';
+import 'control_button.dart';
 
 class FirstRoute extends StatefulWidget {
   const FirstRoute({Key? key}) : super(key: key);
@@ -26,7 +25,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
     super.initState();
 
     rotateController = AnimationController(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
 
@@ -36,7 +35,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
     ).animate(rotateController);
 
     moveController = AnimationController(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
 
@@ -67,7 +66,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
       },
       child: SafeArea(
         child: Scaffold(
-          drawer: SideBar(),
+          drawer: const SideBar(),
           appBar: AppBar(
             backgroundColor: Colors.blue,
             // leading: IconButton(
@@ -118,7 +117,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
               ),
             ],
           ),
-          floatingActionButton: ControlButton(
+          floatingActionButton: controlButton(
             context,
             rotateController,
             rotateAnimation,
@@ -133,7 +132,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                 color: index % 2 == 0 ? Colors.grey : Colors.white,
                 child: ListTile(
                   leading: Container(
-                    padding: EdgeInsets.only(top: 4.5),
+                    padding: const EdgeInsets.only(top: 4.5),
                     child: Text(
                       'Default $index',
                     ),
@@ -213,7 +212,7 @@ class SideBar extends StatelessWidget {
           const ListTile(
             leading: Icon(Icons.mode_night),
             title: Text('Night Mode'),
-            trailing: nightModeSwitch(),
+            trailing: NightModeSwitch(),
           ),
           const ListTile(
             leading: Icon(Icons.settings),
@@ -229,14 +228,14 @@ class SideBar extends StatelessWidget {
   }
 }
 
-class nightModeSwitch extends StatefulWidget {
-  const nightModeSwitch({Key? key}) : super(key: key);
+class NightModeSwitch extends StatefulWidget {
+  const NightModeSwitch({Key? key}) : super(key: key);
 
   @override
-  State<nightModeSwitch> createState() => _nightModeSwitchState();
+  State<NightModeSwitch> createState() => _NightModeSwitchState();
 }
 
-class _nightModeSwitchState extends State<nightModeSwitch> {
+class _NightModeSwitchState extends State<NightModeSwitch> {
   bool light = false;
   @override
   Widget build(BuildContext context) {

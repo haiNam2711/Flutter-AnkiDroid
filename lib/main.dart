@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'FirstRoute.dart';
+import 'first_route.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Navigation Basics',
       home: FirstRoute(),

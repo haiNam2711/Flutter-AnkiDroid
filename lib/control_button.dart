@@ -1,10 +1,7 @@
-import 'dart:ffi';
-import 'dart:math';
-
-import 'package:five_control_widget/AddScene.dart';
+import 'package:five_control_widget/add_scene.dart';
 import 'package:flutter/material.dart';
 
-Widget ControlButton(
+Widget controlButton(
     BuildContext context,
     AnimationController rotateController,
     Animation<double> rotateAnimation,
@@ -32,18 +29,18 @@ Widget ControlButton(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          child: Text(
+                          color: Colors.black54,
+                          margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          child: const Text(
                             'Create deck',
                             style: TextStyle(
                               color: Colors.white,
                             ),
                           ),
-                          color: Colors.black54,
-                          margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                         ),
                         FloatingActionButton(
-                          heroTag: "creat deck",
+                          heroTag: 'creat deck',
                           mini: true,
                           backgroundColor: Colors.blue,
                           child: const Icon(Icons.folder),
@@ -51,7 +48,7 @@ Widget ControlButton(
                         ),
                       ]
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     // Get shared data button.
@@ -59,18 +56,18 @@ Widget ControlButton(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            child: Text(
+                            color: Colors.black54,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: const Text(
                               'Get shared decks',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
-                            color: Colors.black54,
-                            margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                           ),
                           FloatingActionButton(
-                            heroTag: "get shard decks",
+                            heroTag: 'get shard decks',
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: const Icon(Icons.download),
@@ -78,7 +75,7 @@ Widget ControlButton(
                           ),
                         ]
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     // Add note button.
@@ -86,18 +83,18 @@ Widget ControlButton(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            child: Text(
+                            color: Colors.black54,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: const Text(
                               'Add',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
-                            color: Colors.black54,
-                            margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                           ),
                           FloatingActionButton(
-                            heroTag: "add",
+                            heroTag: 'add',
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: const Icon(Icons.add),
@@ -114,7 +111,7 @@ Widget ControlButton(
                           ),
                         ]
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
@@ -132,15 +129,21 @@ Widget ControlButton(
               AnimatedBuilder(
                 animation: rotateAnimation,
                 child: FloatingActionButton(
-                  heroTag: "control",
+                  heroTag: 'control',
                   backgroundColor: Colors.blue,
                   child: const Icon(Icons.add),
                   onPressed: () {
                     openedButton.value = !openedButton.value;
-                    if (openedButton.value) rotateController.forward();
-                    else rotateController.reverse();
-                    if (openedButton.value) moveController.forward();
-                    else moveController.reverse();
+                    if (openedButton.value) {
+                      rotateController.forward();
+                    } else {
+                      rotateController.reverse();
+                    }
+                    if (openedButton.value) {
+                      moveController.forward();
+                    } else {
+                      moveController.reverse();
+                    }
                   },
                 ),
                 builder: (context, child) => Transform.rotate(

@@ -33,7 +33,7 @@ class _AddSceneState extends State<AddScene> {
             ),
             title: Container(
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: Text(
+              child: const Text(
                 'Add note',
                 style: TextStyle(
                   fontSize: 20,
@@ -68,7 +68,7 @@ class _AddSceneState extends State<AddScene> {
               children: [
                 // Type
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
                   child: Row(
                     children: [
                       Text(
@@ -78,7 +78,7 @@ class _AddSceneState extends State<AddScene> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 30,
                       ),
                       Expanded(
@@ -103,7 +103,7 @@ class _AddSceneState extends State<AddScene> {
                               value: value,
                               child: Text(
                                 value,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -116,7 +116,7 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Deck
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
                   child: Row(
                     children: [
                       Text(
@@ -126,7 +126,7 @@ class _AddSceneState extends State<AddScene> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 30,
                       ),
                       Expanded(
@@ -154,7 +154,7 @@ class _AddSceneState extends State<AddScene> {
                               value: value,
                               child: Text(
                                 value,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ),
                               ),
@@ -167,7 +167,7 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Front
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
                   child: Row(
                     children: [
                       Text(
@@ -176,7 +176,7 @@ class _AddSceneState extends State<AddScene> {
                           fontSize: fontsize15,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 260,
                       ),
                       IconButton(
@@ -196,7 +196,7 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Text field
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
                   child: TextFormField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
@@ -211,7 +211,7 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Back
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                   child: Row(
                     children: [
                       Text(
@@ -220,7 +220,7 @@ class _AddSceneState extends State<AddScene> {
                           fontSize: fontsize15,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 260,
                       ),
                       IconButton(
@@ -240,36 +240,37 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Text field
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 30, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 30, 20),
                   child: TextFormField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      style: TextStyle(
-                        fontSize: fontsize15,
-                      ),
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        isDense: true,
-                      ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    style: TextStyle(
+                      fontSize: fontsize15,
+                    ),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      isDense: true,
                     ),
                   ),
+                ),
                 // Tags
                 Card(
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                  color: Colors.black54,
-                  child: ListTile(
-                    title: Text(
-                      'Tags:',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: fontsize15,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                    color: Colors.black54,
+                    child: ListTile(
+                      title: Text(
+                        'Tags:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: fontsize15,
+                        ),
                       ),
-                    ),
-                  )
-                ),
+                    )),
                 // Cards
                 Card(
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                     color: Colors.black54,
                     child: ListTile(
                       title: Text(
@@ -279,8 +280,7 @@ class _AddSceneState extends State<AddScene> {
                           fontSize: fontsize15,
                         ),
                       ),
-                    )
-                ),
+                    )),
               ],
             ),
           ),

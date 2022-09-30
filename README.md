@@ -17,3 +17,6 @@
 <img src="3.GIF" width="225" height="400"/>
 <img src="4.GIF" width="225" height="400"/>
 <img src="5.GIF" width="225" height="400"/>
+
+### Tuần 04 - Lập trình giao diện Ankidroid
+<img src="week4.gif" width="225" height="300"/>

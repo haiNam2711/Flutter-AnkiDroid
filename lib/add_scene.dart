@@ -19,51 +19,51 @@ class _AddSceneState extends State<AddScene> {
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Container(
+            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: const Text(
+              'Add note',
+              style: TextStyle(
+                fontSize: 20,
               ),
+            ),
+          ),
+          actions: [
+            IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-            ),
-            title: Container(
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: const Text(
-                'Add note',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+              icon: const Icon(
+                Icons.check,
               ),
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.check,
-                ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.remove_red_eye,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.remove_red_eye,
-                ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.more_vert,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_vert,
-                ),
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 // Type
@@ -255,8 +255,8 @@ class _AddSceneState extends State<AddScene> {
                 ),
                 // Tags
                 Card(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 15.0),
                     color: Colors.black54,
                     child: ListTile(
                       title: Text(
@@ -269,8 +269,8 @@ class _AddSceneState extends State<AddScene> {
                     )),
                 // Cards
                 Card(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 15.0),
                     color: Colors.black54,
                     child: ListTile(
                       title: Text(

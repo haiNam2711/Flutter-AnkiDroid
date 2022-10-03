@@ -9,7 +9,7 @@
 + Cài đặt Flutter và Android Studio, thực hiện code giao diện "hello world!"
 + Ảnh chụp màn hình run code, ảnh chụp màn hình điện thoại mô phỏng
 
-<img src="1.png" width="800" height="550"/>
+<img src="1.png" width="800" height="551"/>
 
 ### Tuần 03 - Chạy 5 chương trình điều khiển
 <img src="1.GIF" width="225" height="400"/>

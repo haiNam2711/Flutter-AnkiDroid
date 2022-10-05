@@ -1,4 +1,7 @@
+import 'package:five_control_widget/algorithm_sm2/card_information.dart';
+import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:five_control_widget/algorithm_sm2/card.dart';
 
 class AddScene extends StatefulWidget {
   const AddScene({Key? key}) : super(key: key);
@@ -9,9 +12,20 @@ class AddScene extends StatefulWidget {
 
 class _AddSceneState extends State<AddScene> {
   String typeValue = 'Basic';
-  String deckValue = 'Default 0';
+  String deckValue = DeckManager.deckList[0].deckName;
   double fontSize20 = 20.0;
-  double fontsize15 = 15.0;
+  double fontSize15 = 15.0;
+  final myFrontController = TextEditingController(); // control text of front text field
+  final myBackController = TextEditingController(); // control text of back text field
+  String deckName = DeckManager.deckList[0].deckName;
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myFrontController .dispose();
+    myBackController .dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +56,11 @@ class _AddSceneState extends State<AddScene> {
           actions: [
             IconButton(
               onPressed: () {
+                CardInformation frontSide = CardInformation(myFrontController.text);
+                CardInformation backSide = CardInformation(myBackController.text);
+                FlashCard flashCard = FlashCard(frontSide,backSide);
+                //print(deckName);
+                DeckManager.addCard(deckName: deckName, flashCard: flashCard);
                 Navigator.pop(context);
               },
               icon: const Icon(
@@ -74,7 +93,7 @@ class _AddSceneState extends State<AddScene> {
                       Text(
                         'Type:',
                         style: TextStyle(
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -122,7 +141,7 @@ class _AddSceneState extends State<AddScene> {
                       Text(
                         'Deck:',
                         style: TextStyle(
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -137,19 +156,10 @@ class _AddSceneState extends State<AddScene> {
                           onChanged: (String? newValue) {
                             setState(() {
                               deckValue = newValue!;
+                              deckName = deckValue;
                             });
                           },
-                          items: <String>[
-                            'Default 0',
-                            'Default 1',
-                            'Default 2',
-                            'Default 3',
-                            'Default 4',
-                            'Default 5',
-                            'Default 6',
-                            'Default 7',
-                            'Default 8',
-                          ].map<DropdownMenuItem<String>>((String value) {
+                          items: DeckManager.getDecksName().map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
@@ -173,7 +183,7 @@ class _AddSceneState extends State<AddScene> {
                       Text(
                         'Front',
                         style: TextStyle(
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                         ),
                       ),
                       const SizedBox(
@@ -198,10 +208,11 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
                   child: TextFormField(
+                    controller: myFrontController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     style: TextStyle(
-                      fontSize: fontsize15,
+                      fontSize: fontSize15,
                     ),
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
@@ -217,7 +228,7 @@ class _AddSceneState extends State<AddScene> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                         ),
                       ),
                       const SizedBox(
@@ -242,10 +253,11 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 0, 30, 20),
                   child: TextFormField(
+                    controller: myBackController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     style: TextStyle(
-                      fontSize: fontsize15,
+                      fontSize: fontSize15,
                     ),
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
@@ -263,7 +275,7 @@ class _AddSceneState extends State<AddScene> {
                         'Tags:',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                         ),
                       ),
                     )),
@@ -277,7 +289,7 @@ class _AddSceneState extends State<AddScene> {
                         'Card: Card1',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: fontsize15,
+                          fontSize: fontSize15,
                         ),
                       ),
                     )),
@@ -289,3 +301,5 @@ class _AddSceneState extends State<AddScene> {
     );
   }
 }
+
+

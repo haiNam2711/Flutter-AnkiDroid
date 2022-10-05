@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+
 import 'darkmode/config.dart';
 import 'package:flutter/material.dart';
 import 'second_route.dart';
@@ -96,13 +98,19 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                print(DeckManager.deckList[0].cardList.length);
+              },
               icon: const Icon(
                 Icons.search,
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+
+                });
+              },
               icon: const Icon(
                 Icons.refresh,
               ),
@@ -125,7 +133,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
         ),
         body: SafeArea(
           child: ListView.builder(
-            itemCount: 9,
+            itemCount: DeckManager.deckList.length,
             itemBuilder: (context, index) {
               return Card(
                 color: index % 2 == 0 ? Colors.grey : Colors.white,
@@ -133,27 +141,27 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                   leading: Container(
                     padding: const EdgeInsets.only(top: 4.5),
                     child: Text(
-                      'Default $index',
+                      DeckManager.deckList[index].deckName,
                     ),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '1 ',
+                        '${DeckManager.deckList[index].getNewCard()} ',
                         style: TextStyle(
-                          color: Colors.blue.shade900,
-                        ),
-                      ),
-                      const Text(
-                        '2 ',
-                        style: TextStyle(
-                          color: Colors.red,
+                          color: Colors.blue.shade700,
                         ),
                       ),
                       Text(
-                        '3',
-                        style: TextStyle(color: Colors.green.shade400),
+                        '${DeckManager.deckList[index].getLearningCard()} ',
+                        style: TextStyle(
+                          color: Colors.red.shade700,
+                        ),
+                      ),
+                      Text(
+                        '${DeckManager.deckList[index].getGraduatedCard()}',
+                        style: TextStyle(color: Colors.green.shade900),
                       ),
                     ],
                   ),

@@ -4,11 +4,13 @@ import 'darkmode/config.dart';
 import 'first_route.dart';
 
 void main() {
+  // DeckManager.addDeck(deckName: 'text');
+  // DeckManager.addDeck(deckName: 'text1');
+  // DeckManager.addDeck(deckName: 'text2');
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   State<MyApp> createState() => _MyAppState();
 }

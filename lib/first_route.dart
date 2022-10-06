@@ -123,13 +123,18 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
             ),
           ],
         ),
-        floatingActionButton: controlButton(
+        floatingActionButton: ControlButton(
           context,
           rotateController,
           rotateAnimation,
           moveController,
           moveAnimation,
           openedButton,
+          changeState: () {
+            setState(() {
+
+            });
+          },
         ),
         body: SafeArea(
           child: ListView.builder(

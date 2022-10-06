@@ -1,5 +1,6 @@
 import 'package:five_control_widget/add_scene.dart';
 import 'package:flutter/material.dart';
+import 'firebase.dart';
 
 Widget controlButton(
     BuildContext context,
@@ -66,12 +67,17 @@ Widget controlButton(
                               ),
                             ),
                           ),
-                          FloatingActionButton(
-                            heroTag: 'get shard decks',
-                            mini: true,
-                            backgroundColor: Colors.blue,
-                            child: const Icon(Icons.download),
-                            onPressed: () {},
+                          // FloatingActionButton(
+                          //   heroTag: 'get shard decks',
+                          //   mini: true,
+                          //   backgroundColor: Colors.blue,
+                          //   child: const Icon(Icons.download),
+                          //   onPressed: () {},
+                          // ),
+                          const AddUser(
+                            'company',
+                            'buugo',
+                            25,
                           ),
                         ]
                     ),

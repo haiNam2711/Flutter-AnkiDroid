@@ -179,6 +179,7 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Front',
@@ -186,18 +187,12 @@ class _AddSceneState extends State<AddScene> {
                           fontSize: fontSize15,
                         ),
                       ),
-                      const SizedBox(
-                        width: 260,
-                      ),
+                      // const SizedBox(
+                      //   width: 260,
+                      // ),
                       IconButton(
                         icon: const Icon(
                           Icons.attachment,
-                        ),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_up,
                         ),
                         onPressed: () {},
                       ),
@@ -224,6 +219,7 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Back',
@@ -231,18 +227,9 @@ class _AddSceneState extends State<AddScene> {
                           fontSize: fontSize15,
                         ),
                       ),
-                      const SizedBox(
-                        width: 260,
-                      ),
                       IconButton(
                         icon: const Icon(
                           Icons.attachment,
-                        ),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_up,
                         ),
                         onPressed: () {},
                       ),

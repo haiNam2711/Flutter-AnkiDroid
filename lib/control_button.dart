@@ -82,6 +82,7 @@ class ControlButton extends StatelessWidget {
                             ),
                           ),
                         ),
+
                         // FloatingActionButton(
                         //   heroTag: 'get shard decks',
                         //   mini: true,
@@ -123,11 +124,12 @@ class ControlButton extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddScene(
-                                    changeState: () {
-                                      changeState();
-                                    },
-                                  )),
+                                  builder: (context) =>
+                                      AddScene(
+                                        changeState: () {
+                                          changeState();
+                                        },
+                                      )),
                             );
                           },
                         ),
@@ -185,40 +187,42 @@ class ControlButton extends StatelessWidget {
   void showCreateDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Create Deck'),
-        content: TextFormField(
-          controller: deckNameController,
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              if (deckNameController.text != '') {
-                DeckManager.addDeck(deckName: deckNameController.text);
-                changeState();
-              }
-              Navigator.pop(context, 'OK');
-            },
-            child: const Text('OK'),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Create Deck'),
+            content: TextFormField(
+              controller: deckNameController,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  if (deckNameController.text != '') {
+                    DeckManager.addDeck(deckName: deckNameController.text);
+                    changeState();
+                  }
+                  Navigator.pop(context, 'OK');
+                },
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   void showAddDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Add card flase'),
-        content: const Text('Your deck list is empty.'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Add card flase'),
+            content: const Text('Your deck list is empty.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

@@ -177,7 +177,9 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SecondRoute()),
+                          builder: (context) => SecondRoute(
+                            deckIndex: index,
+                          )),
                     );
                   },
                 ),

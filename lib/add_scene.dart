@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 
 class AddScene extends StatefulWidget {
-  const AddScene({Key? key}) : super(key: key);
+  Function() changeState;
+
+  AddScene({Key? key, required this.changeState}) : super(key: key);
 
   @override
   State<AddScene> createState() => _AddSceneState();
@@ -62,6 +64,7 @@ class _AddSceneState extends State<AddScene> {
                 //print(deckName);
                 DeckManager.addCard(deckName: deckName, flashCard: flashCard);
                 Navigator.pop(context);
+                widget.changeState();
               },
               icon: const Icon(
                 Icons.check,

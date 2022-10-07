@@ -1,5 +1,6 @@
 import 'package:five_control_widget/add_scene.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/firebase.dart';
 import 'package:flutter/material.dart';
 
 TextEditingController deckNameController = TextEditingController();
@@ -81,13 +82,15 @@ class ControlButton extends StatelessWidget {
                             ),
                           ),
                         ),
-                        FloatingActionButton(
-                          heroTag: 'get shard decks',
-                          mini: true,
-                          backgroundColor: Colors.blue,
-                          child: const Icon(Icons.download),
-                          onPressed: () {},
-                        ),
+
+                        // FloatingActionButton(
+                        //   heroTag: 'get shard decks',
+                        //   mini: true,
+                        //   backgroundColor: Colors.blue,
+                        //   child: const Icon(Icons.download),
+                        //   onPressed: () {},
+                        // ),
+                        const AddUser('thangg', 'uet', 15),
                       ]),
                       const SizedBox(
                         height: 20,
@@ -121,7 +124,12 @@ class ControlButton extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const AddScene()),
+                                  builder: (context) =>
+                                      AddScene(
+                                        changeState: () {
+                                          changeState();
+                                        },
+                                      )),
                             );
                           },
                         ),
@@ -179,40 +187,42 @@ class ControlButton extends StatelessWidget {
   void showCreateDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Create Deck'),
-        content: TextFormField(
-          controller: deckNameController,
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              if (deckNameController.text != '') {
-                DeckManager.addDeck(deckName: deckNameController.text);
-                changeState();
-              }
-              Navigator.pop(context, 'OK');
-            },
-            child: const Text('OK'),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Create Deck'),
+            content: TextFormField(
+              controller: deckNameController,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  if (deckNameController.text != '') {
+                    DeckManager.addDeck(deckName: deckNameController.text);
+                    changeState();
+                  }
+                  Navigator.pop(context, 'OK');
+                },
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   void showAddDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Add card flase'),
-        content: const Text('Your deck list is empty.'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Add card flase'),
+            content: const Text('Your deck list is empty.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

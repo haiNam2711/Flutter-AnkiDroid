@@ -99,7 +99,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
           actions: [
             IconButton(
               onPressed: () {
-                print(DeckManager.deckList[0].cardList.length);
+
               },
               icon: const Icon(
                 Icons.search,
@@ -179,6 +179,9 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                       MaterialPageRoute(
                           builder: (context) => SecondRoute(
                             deckIndex: index,
+                            changeState: () {
+                              setState(() {});
+                            },
                           )),
                     );
                   },

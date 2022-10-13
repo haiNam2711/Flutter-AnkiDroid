@@ -3,6 +3,7 @@ import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 
+// ignore: must_be_immutable
 class AddScene extends StatefulWidget {
   Function() changeState;
 
@@ -58,9 +59,13 @@ class _AddSceneState extends State<AddScene> {
           actions: [
             IconButton(
               onPressed: () {
-                CardInformation frontSide = CardInformation(myFrontController.text);
-                CardInformation backSide = CardInformation(myBackController.text);
-                FlashCard flashCard = FlashCard(frontSide,backSide);
+                CardInformation frontSide = CardInformation(
+                    text: myFrontController.text
+                );
+                CardInformation backSide = CardInformation(
+                    text: myBackController.text
+                );
+                FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
                 //print(deckName);
                 DeckManager.addCard(deckName: deckName, flashCard: flashCard);
                 Navigator.pop(context);

@@ -1,9 +1,19 @@
+// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
 class SecondRoute extends StatefulWidget {
   final int deckIndex;
-  const SecondRoute({Key? key, required this.deckIndex}) : super(key: key);
+  int cardIndex = 0;
+  bool haveCard = true;
+  final Function() changeState;
+
+  SecondRoute({Key? key, required this.deckIndex, required this.changeState}) : super(key: key) {
+    cardIndex = DeckManager.deckList[deckIndex].getNextIndex(cardIndex);
+    if (cardIndex == -1) {
+      haveCard = false;
+    }
+  }
 
   @override
   State<SecondRoute> createState() => _SecondRouteState();
@@ -13,7 +23,6 @@ class _SecondRouteState extends State<SecondRoute> {
   final myFrontController = TextEditingController(); // control text of front text field
   final myBackController = TextEditingController();
   bool showAnswer = false;
-  int cardIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +34,7 @@ class _SecondRouteState extends State<SecondRoute> {
             Icons.arrow_back,
           ),
           onPressed: () {
+            widget.changeState();
             Navigator.pop(context);
           },
         ),
@@ -41,7 +51,7 @@ class _SecondRouteState extends State<SecondRoute> {
               ),
               Text(
                 '${DeckManager.deckList[widget.deckIndex].getCardAmout()} cards due.',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
                 ),
@@ -107,29 +117,42 @@ class _SecondRouteState extends State<SecondRoute> {
             const SizedBox(
               height: 20,
             ),
-            Center(
-              child: Text(
-                DeckManager.deckList[widget.deckIndex]
-                    .getCardFromId(cardIndex).frontSide?.text??'Text not found',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
+            Visibility(
+              visible: !widget.haveCard,
+              child: const Center(
+                child: Text(
+                  'Congratulations!',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-            const Divider(
-                color: Colors.black
-            ),
-            const SizedBox(
-              height: 20,
+            Visibility(
+              visible: !widget.haveCard,
+              child: const Center(
+                child: Text(
+                  'You have finished this deck for now.',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
             Visibility(
-              visible: showAnswer,
+              visible: widget.haveCard,
               child: Center(
                 child: Text(
+                  widget.haveCard?
                   DeckManager.deckList[widget.deckIndex]
-                      .getCardFromId(cardIndex).backSide?.text??'Text not found',
+                      .getCardFromId(widget.cardIndex).frontSide?.text??'Text not found':
+                  'Not have card',
                   style: const TextStyle(
                     fontSize: 20,
                     color: Colors.black,
@@ -138,10 +161,35 @@ class _SecondRouteState extends State<SecondRoute> {
                 ),
               ),
             ),
-            Spacer(),
             Visibility(
-              visible: showAnswer,
-              child: Container(
+              visible: showAnswer && widget.haveCard,
+              child: const Divider(
+                  color: Colors.black
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Visibility(
+              visible: showAnswer && widget.haveCard,
+              child: Center(
+                child: Text(
+                  widget.haveCard?
+                  DeckManager.deckList[widget.deckIndex]
+                      .getCardFromId(widget.cardIndex).backSide?.text??'Text not found':
+                  'Not have card',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            const Spacer(),
+            Visibility(
+              visible: showAnswer && widget.haveCard,
+              child: SizedBox(
                 width: double.infinity,
                 child: Row(
                   children: [
@@ -152,11 +200,15 @@ class _SecondRouteState extends State<SecondRoute> {
                             borderRadius: BorderRadius.circular(0),
                           ),
                           minimumSize: const Size.fromHeight(50),
-                          primary: Colors.red,
+                          backgroundColor: Colors.red,
                         ),
                         onPressed: () {
-                          cardIndex = DeckManager.deckList[widget.deckIndex].getNextWhenAgain(cardIndex);
+                          DeckManager.deckList[widget.deckIndex].cardList[widget.cardIndex].againPress();
+                          widget.cardIndex = DeckManager.deckList[widget.deckIndex].getNextIndex(widget.cardIndex);
                           showAnswer = !showAnswer;
+                          if (widget.cardIndex == -1) {
+                            widget.haveCard = false;
+                          }
                           setState(() {
 
                           });
@@ -170,13 +222,16 @@ class _SecondRouteState extends State<SecondRoute> {
                           shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
                           ),
-                          primary: Colors.blueGrey,
+                          backgroundColor: Colors.blueGrey,
                           minimumSize: const Size.fromHeight(50),
                         ),
                         onPressed: () {
-                          DeckManager.deckList[widget.deckIndex].cardList[cardIndex].hardPress();
-                          cardIndex++;
+                          DeckManager.deckList[widget.deckIndex].cardList[widget.cardIndex].hardPress();
+                          widget.cardIndex = DeckManager.deckList[widget.deckIndex].getNextIndex(widget.cardIndex);
                           showAnswer = !showAnswer;
+                          if (widget.cardIndex == -1) {
+                            widget.haveCard = false;
+                          }
                           setState(() {
 
                           });
@@ -190,13 +245,16 @@ class _SecondRouteState extends State<SecondRoute> {
                           shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
                           ),
-                          primary: Colors.green,
+                          backgroundColor: Colors.green,
                           minimumSize: const Size.fromHeight(50),
                         ),
                         onPressed: () {
-                          DeckManager.deckList[widget.deckIndex].cardList[cardIndex].goodPress();
-                          cardIndex++;
+                          DeckManager.deckList[widget.deckIndex].cardList[widget.cardIndex].goodPress();
+                          widget.cardIndex = DeckManager.deckList[widget.deckIndex].getNextIndex(widget.cardIndex);
                           showAnswer = !showAnswer;
+                          if (widget.cardIndex == -1) {
+                            widget.haveCard = false;
+                          }
                           setState(() {
 
                           });
@@ -210,12 +268,15 @@ class _SecondRouteState extends State<SecondRoute> {
                           shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
                           ),
-                          primary: Colors.blue,
+                          backgroundColor: Colors.blue,
                           minimumSize: const Size.fromHeight(50),
                         ),
                         onPressed: () {
-                          DeckManager.deckList[widget.deckIndex].cardList[cardIndex].easyPress();
-                          cardIndex++;
+                          DeckManager.deckList[widget.deckIndex].cardList[widget.cardIndex].easyPress();
+                          widget.cardIndex = DeckManager.deckList[widget.deckIndex].getNextIndex(widget.cardIndex);
+                          if (widget.cardIndex == -1) {
+                            widget.haveCard = false;
+                          }
                           showAnswer = !showAnswer;
                           setState(() {
 
@@ -229,13 +290,13 @@ class _SecondRouteState extends State<SecondRoute> {
               ),
             ),
             Visibility(
-              visible: !showAnswer,
+              visible: !showAnswer && widget.haveCard,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                   ),
-                  primary: Colors.blueGrey,
+                  backgroundColor: Colors.blueGrey,
                   minimumSize: const Size.fromHeight(50), // NEW
                 ),
                 onPressed: () {

@@ -5,38 +5,36 @@ import 'algorithm_sm2/card_information.dart';
 import 'algorithm_sm2/deck_manager.dart';
 import 'darkmode/config.dart';
 import 'first_route.dart';
-import 'package:five_control_widget/darkmode/theme.dart';
-import 'package:flutter/material.dart';
-import 'darkmode/config.dart';
-import 'first_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  DeckManager.addDeck(deckName: 'text');
-  DeckManager.addDeck(deckName: 'text1');
-  DeckManager.addDeck(deckName: 'text2');
+  DeckManager.addDeck(deckName: 'deck0');
+  DeckManager.addDeck(deckName: 'deck1');
+  DeckManager.addDeck(deckName: 'deck2');
 
-  CardInformation frontSide = CardInformation('1');
-  CardInformation backSide = CardInformation('1');
-  FlashCard flashCard = FlashCard(frontSide,backSide);
+  CardInformation frontSide = CardInformation(text: 'this is card 0 front side');
+  CardInformation backSide = CardInformation(text: 'this is card 0 back side');
+  FlashCard flashCard = FlashCard(frontSide,backSide,DateTime.now());
   //print(deckName);
-  DeckManager.addCard(deckName: 'text', flashCard: flashCard);
+  DeckManager.addCard(deckName: 'deck0', flashCard: flashCard);
 
-  frontSide = CardInformation('2');
-  backSide = CardInformation('2');
-  flashCard = FlashCard(frontSide,backSide);
+  frontSide = CardInformation(text: 'this is card 1 front side');
+  backSide = CardInformation(text: 'this is card 1 back side');
+  flashCard = FlashCard(frontSide,backSide,DateTime.now());
   //print(deckName);
-  DeckManager.addCard(deckName: 'text', flashCard: flashCard);
+  DeckManager.addCard(deckName: 'deck0', flashCard: flashCard);
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<MyApp> createState() => _MyAppState();
 }

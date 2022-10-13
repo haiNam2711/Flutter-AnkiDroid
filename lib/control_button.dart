@@ -90,7 +90,8 @@ class ControlButton extends StatelessWidget {
                         //   child: const Icon(Icons.download),
                         //   onPressed: () {},
                         // ),
-                        const AddUser('thangg', 'uet', 15),
+                        const PushToCloud(),
+                        const PullFromCloud(),
                       ]),
                       const SizedBox(
                         height: 20,

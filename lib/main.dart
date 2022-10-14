@@ -1,4 +1,5 @@
 import 'package:five_control_widget/darkmode/theme.dart';
+import 'package:five_control_widget/darkmode/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'algorithm_sm2/card.dart';
 import 'algorithm_sm2/card_information.dart';
@@ -55,8 +56,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AnkiDroid',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
       themeMode: AppTheme().currentTheme(),
       home: const FirstRoute(),
 

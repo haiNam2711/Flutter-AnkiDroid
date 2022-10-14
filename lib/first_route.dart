@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/darkmode/theme.dart';
 
 import 'darkmode/config.dart';
 import 'package:flutter/material.dart';
@@ -98,18 +99,14 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
           ),
           actions: [
             IconButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.search,
               ),
             ),
             IconButton(
               onPressed: () {
-                setState(() {
-
-                });
+                setState(() {});
               },
               icon: const Icon(
                 Icons.refresh,
@@ -131,9 +128,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
           moveAnimation,
           openedButton,
           changeState: () {
-            setState(() {
-
-            });
+            setState(() {});
           },
         ),
         body: SafeArea(
@@ -147,6 +142,12 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(top: 4.5),
                     child: Text(
                       DeckManager.deckList[index].deckName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: AppTheme().currentTheme() == ThemeMode.dark
+                            ? Colors.black
+                            : Colors.black,
+                      ),
                     ),
                   ),
                   trailing: Row(
@@ -155,18 +156,22 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                       Text(
                         '${DeckManager.deckList[index].getNewCard()} ',
                         style: TextStyle(
+                          fontWeight: FontWeight.w500,
                           color: Colors.blue.shade700,
                         ),
                       ),
                       Text(
                         '${DeckManager.deckList[index].getLearningCard()} ',
                         style: TextStyle(
+                          fontWeight: FontWeight.w500,
                           color: Colors.red.shade700,
                         ),
                       ),
                       Text(
                         '${DeckManager.deckList[index].getGraduatedCard()}',
-                        style: TextStyle(color: Colors.green.shade900),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.green.shade900),
                       ),
                     ],
                   ),
@@ -178,11 +183,11 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                       context,
                       MaterialPageRoute(
                           builder: (context) => SecondRoute(
-                            deckIndex: index,
-                            changeState: () {
-                              setState(() {});
-                            },
-                          )),
+                                deckIndex: index,
+                                changeState: () {
+                                  setState(() {});
+                                },
+                              )),
                     );
                   },
                 ),
@@ -254,7 +259,7 @@ class NightModeSwitch extends StatefulWidget {
 }
 
 class _NightModeSwitchState extends State<NightModeSwitch> {
-  bool light = false;
+  static bool light = false;
   @override
   Widget build(BuildContext context) {
     return Switch(
@@ -262,9 +267,7 @@ class _NightModeSwitchState extends State<NightModeSwitch> {
         onChanged: (bool value2) {
           light = value2;
           appTheme.switchTheme();
-          setState(() {
-
-          });
+          setState(() {});
         });
   }
 }

@@ -3,6 +3,8 @@ import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/firebase.dart';
 import 'package:flutter/material.dart';
 
+import 'darkmode/theme.dart';
+
 TextEditingController deckNameController = TextEditingController();
 
 class ControlButton extends StatelessWidget {
@@ -13,12 +15,8 @@ class ControlButton extends StatelessWidget {
   final Animation<double> moveAnimation;
   final ValueNotifier<bool> openedButton;
 
-  const ControlButton(this.context,
-      this.rotateController,
-      this.rotateAnimation,
-      this.moveController,
-      this.moveAnimation,
-      this.openedButton,
+  const ControlButton(this.context, this.rotateController, this.rotateAnimation,
+      this.moveController, this.moveAnimation, this.openedButton,
       {super.key, required this.changeState});
 
   final Function() changeState;
@@ -57,7 +55,12 @@ class ControlButton extends StatelessWidget {
                           heroTag: 'creat deck',
                           mini: true,
                           backgroundColor: Colors.blue,
-                          child: const Icon(Icons.folder),
+                          child: Icon(
+                            Icons.folder,
+                            color: AppTheme().currentTheme() == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white,
+                          ),
                           onPressed: () {
                             rotateController.reverse();
                             moveController.reverse();
@@ -113,7 +116,12 @@ class ControlButton extends StatelessWidget {
                           heroTag: 'add',
                           mini: true,
                           backgroundColor: Colors.blue,
-                          child: const Icon(Icons.add),
+                          child: Icon(
+                            Icons.add,
+                            color: AppTheme().currentTheme() == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white,
+                          ),
                           onPressed: () {
                             rotateController.reverse();
                             moveController.reverse();
@@ -125,8 +133,7 @@ class ControlButton extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      AddScene(
+                                  builder: (context) => AddScene(
                                         changeState: () {
                                           changeState();
                                         },
@@ -140,14 +147,13 @@ class ControlButton extends StatelessWidget {
                       ),
                     ],
                   ),
-                  builder: (context, child) =>
-                      Transform.translate(
-                        offset: Offset(
-                          0.0,
-                          -moveAnimation.value + 400.0,
-                        ),
-                        child: child,
-                      ),
+                  builder: (context, child) => Transform.translate(
+                    offset: Offset(
+                      0.0,
+                      -moveAnimation.value + 400.0,
+                    ),
+                    child: child,
+                  ),
                 ),
 
                 // Main control button.
@@ -156,7 +162,12 @@ class ControlButton extends StatelessWidget {
                   child: FloatingActionButton(
                     heroTag: 'control',
                     backgroundColor: Colors.blue,
-                    child: const Icon(Icons.add),
+                    child: Icon(
+                      Icons.add,
+                      color: AppTheme().currentTheme() == ThemeMode.dark
+                          ? Colors.black
+                          : Colors.white,
+                    ),
                     onPressed: () {
                       openedButton.value = !openedButton.value;
                       if (openedButton.value) {
@@ -171,11 +182,10 @@ class ControlButton extends StatelessWidget {
                       }
                     },
                   ),
-                  builder: (context, child) =>
-                      Transform.rotate(
-                        angle: rotateAnimation.value,
-                        child: child,
-                      ),
+                  builder: (context, child) => Transform.rotate(
+                    angle: rotateAnimation.value,
+                    child: child,
+                  ),
                 ),
               ],
             ),
@@ -188,42 +198,40 @@ class ControlButton extends StatelessWidget {
   void showCreateDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) =>
-          AlertDialog(
-            title: const Text('Create Deck'),
-            content: TextFormField(
-              controller: deckNameController,
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  if (deckNameController.text != '') {
-                    DeckManager.addDeck(deckName: deckNameController.text);
-                    changeState();
-                  }
-                  Navigator.pop(context, 'OK');
-                },
-                child: const Text('OK'),
-              ),
-            ],
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Create Deck'),
+        content: TextFormField(
+          controller: deckNameController,
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              if (deckNameController.text != '') {
+                DeckManager.addDeck(deckName: deckNameController.text);
+                changeState();
+              }
+              Navigator.pop(context, 'OK');
+            },
+            child: const Text('OK'),
           ),
+        ],
+      ),
     );
   }
 
   void showAddDia(dynamic context) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) =>
-          AlertDialog(
-            title: const Text('Add card flase'),
-            content: const Text('Your deck list is empty.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Add card flase'),
+        content: const Text('Your deck list is empty.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
           ),
+        ],
+      ),
     );
   }
 }

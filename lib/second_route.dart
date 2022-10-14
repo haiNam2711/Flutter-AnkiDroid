@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
+import 'darkmode/theme.dart';
+
 class SecondRoute extends StatefulWidget {
   final int deckIndex;
   int cardIndex = 0;
@@ -119,12 +121,14 @@ class _SecondRouteState extends State<SecondRoute> {
             ),
             Visibility(
               visible: !widget.haveCard,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Congratulations!',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.black,
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -133,12 +137,14 @@ class _SecondRouteState extends State<SecondRoute> {
             ),
             Visibility(
               visible: !widget.haveCard,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'You have finished this deck for now.',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.black,
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -153,9 +159,11 @@ class _SecondRouteState extends State<SecondRoute> {
                   DeckManager.deckList[widget.deckIndex]
                       .getCardFromId(widget.cardIndex).frontSide?.text??'Text not found':
                   'Not have card',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -178,9 +186,11 @@ class _SecondRouteState extends State<SecondRoute> {
                   DeckManager.deckList[widget.deckIndex]
                       .getCardFromId(widget.cardIndex).backSide?.text??'Text not found':
                   'Not have card',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),

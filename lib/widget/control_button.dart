@@ -1,9 +1,9 @@
-import 'package:five_control_widget/add_scene.dart';
+import 'package:five_control_widget/routes/add_route.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
-import 'package:five_control_widget/firebase.dart';
+import 'package:five_control_widget/firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
-import 'darkmode/theme.dart';
+import '../darkmode/theme.dart';
 
 TextEditingController deckNameController = TextEditingController();
 

@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/darkmode/theme.dart';
 
-import 'darkmode/config.dart';
+import '../darkmode/config.dart';
 import 'package:flutter/material.dart';
-import 'second_route.dart';
-import 'control_button.dart';
+import 'learning_route.dart';
+import '../widget/control_button.dart';
 
 class FirstRoute extends StatefulWidget {
   const FirstRoute({Key? key}) : super(key: key);

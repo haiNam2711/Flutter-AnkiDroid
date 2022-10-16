@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
-import 'darkmode/theme.dart';
+import '../darkmode/theme.dart';
 
 class SecondRoute extends StatefulWidget {
   final int deckIndex;

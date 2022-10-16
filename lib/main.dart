@@ -5,9 +5,9 @@ import 'algorithm_sm2/card.dart';
 import 'algorithm_sm2/card_information.dart';
 import 'algorithm_sm2/deck_manager.dart';
 import 'darkmode/config.dart';
-import 'first_route.dart';
+import 'routes/home_route.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 
 void main() async {
   DeckManager.addDeck(deckName: 'deck0');

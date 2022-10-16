@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
-import 'algorithm_sm2/card.dart';
-import 'algorithm_sm2/card_information.dart';
+import '../algorithm_sm2/card.dart';
+import '../algorithm_sm2/card_information.dart';
 
 class PushToCloud extends StatelessWidget {
   const PushToCloud({super.key});

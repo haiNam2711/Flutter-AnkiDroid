@@ -23,8 +23,14 @@ class SecondRoute extends StatefulWidget {
 
 class _SecondRouteState extends State<SecondRoute> {
   final myFrontController = TextEditingController(); // control text of front text field
-  final myBackController = TextEditingController();
+  final myBackController = TextEditingController();  // control text of back text field
   bool showAnswer = false;
+
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

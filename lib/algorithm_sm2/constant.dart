@@ -1,5 +1,5 @@
 class LearningStep {
-  static const double againStep = 100;
+  static const double againStep = 10;
   static const double hardStep = 20;
   static const double goodStep = 25;
   static const double graduatingIvl = 30;

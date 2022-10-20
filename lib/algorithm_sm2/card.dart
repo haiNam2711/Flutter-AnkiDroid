@@ -25,7 +25,6 @@ class FlashCard {
     );
   }
 
-
   void againPress() {
     learnCounter += 1;
     switch (stateOfCard) {

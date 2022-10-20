@@ -110,6 +110,7 @@ class _AddSceneState extends State<AddScene> {
                       ),
                       Expanded(
                         child: DropdownButton<String>(
+                          key: const Key('typeDropDownButton'),
                           value: typeValue,
                           isDense: true,
                           isExpanded: true,

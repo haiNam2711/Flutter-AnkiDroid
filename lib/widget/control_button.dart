@@ -86,15 +86,20 @@ class ControlButton extends StatelessWidget {
                           ),
                         ),
 
-                        // FloatingActionButton(
-                        //   heroTag: 'get shard decks',
-                        //   mini: true,
-                        //   backgroundColor: Colors.blue,
-                        //   child: const Icon(Icons.download),
-                        //   onPressed: () {},
-                        // ),
-                        const PushToCloud(),
-                        const PullFromCloud(),
+                        FloatingActionButton(
+                          heroTag: 'get shard decks',
+                          mini: true,
+                          backgroundColor: Colors.blue,
+                          child: Icon(
+                              Icons.download,
+                              color: AppTheme().currentTheme() == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
+                          ),
+                          onPressed: () {},
+                        ),
+                        // const PushToCloud(),
+                        // const PullFromCloud(),
                       ]),
                       const SizedBox(
                         height: 20,

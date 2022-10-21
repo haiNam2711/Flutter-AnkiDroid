@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-  testWidgets('Testing add note widget', (WidgetTester tester) async {
+  testWidgets('Testing home route widget', (WidgetTester tester) async {
     DeckManager.addDeck(deckName: 'newDeck');
 
     Widget testWidget = const MediaQuery(

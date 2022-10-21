@@ -7,7 +7,7 @@ import 'algorithm_sm2/deck_manager.dart';
 import 'darkmode/config.dart';
 import 'routes/home_route.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase/firebase_options.dart';
+//import 'firebase/firebase_options.dart';
 
 void main() async {
   DeckManager.addDeck(deckName: 'deck0');
@@ -26,10 +26,10 @@ void main() async {
   //print(deckName);
   DeckManager.addCard(deckName: 'deck0', flashCard: flashCard);
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
 }
 

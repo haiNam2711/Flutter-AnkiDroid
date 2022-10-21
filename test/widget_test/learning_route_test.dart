@@ -1,7 +1,6 @@
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 import 'package:five_control_widget/algorithm_sm2/card_information.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
-import 'package:five_control_widget/routes/home_route.dart';
 import 'package:five_control_widget/routes/learning_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +18,7 @@ void main() {
     testWidgets('Testing showing a empty deck', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
 
-      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){setState(){}})));
+      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){})));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('0 cards due.');
@@ -51,7 +50,7 @@ void main() {
       flashCard = FlashCard(frontSide, backSide, DateTime.now());
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
-      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){setState(){}})));
+      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){})));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('test_deck1');
@@ -80,7 +79,7 @@ void main() {
 
     testWidgets('Testing back button', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
-      SecondRoute secondRoute = SecondRoute(deckIndex: 0, changeState: (){setState(){}});
+      SecondRoute secondRoute = SecondRoute(deckIndex: 0, changeState: (){});
 
       await tester.pumpWidget(createWidgetForTesting(child: secondRoute));
       await tester.pumpAndSettle();

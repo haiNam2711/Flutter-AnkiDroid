@@ -28,171 +28,175 @@ class ControlButton extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                AnimatedBuilder(
-                  animation: moveAnimation,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      // Create deck button.
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Container(
-                          color: Colors.black54,
-                          margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                          child: const Text(
-                            'Create deck',
-                            style: TextStyle(
-                              color: Colors.white,
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  AnimatedBuilder(
+                    animation: moveAnimation,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Create deck button.
+                        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                          Container(
+                            color: Colors.black54,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: const Text(
+                              'Create deck',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        FloatingActionButton(
-                          heroTag: 'creat deck',
-                          mini: true,
-                          backgroundColor: Colors.blue,
-                          child: Icon(
-                            Icons.folder,
-                            color: AppTheme().currentTheme() == ThemeMode.dark
-                                ? Colors.black
-                                : Colors.white,
-                          ),
-                          onPressed: () {
-                            rotateController.reverse();
-                            moveController.reverse();
-                            openedButton.value = !openedButton.value;
-                            showCreateDia(context);
-                          },
-                        ),
-                      ]),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // Get shared data button.
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Container(
-                          color: Colors.black54,
-                          margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                          child: const Text(
-                            'Get shared decks',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-
-                        FloatingActionButton(
-                          heroTag: 'get shard decks',
-                          mini: true,
-                          backgroundColor: Colors.blue,
-                          child: Icon(
-                              Icons.download,
+                          FloatingActionButton(
+                            heroTag: 'creat deck',
+                            mini: true,
+                            backgroundColor: Colors.blue,
+                            child: Icon(
+                              Icons.folder,
                               color: AppTheme().currentTheme() == ThemeMode.dark
                                   ? Colors.black
                                   : Colors.white,
+                            ),
+                            onPressed: () {
+                              rotateController.reverse();
+                              moveController.reverse();
+                              openedButton.value = !openedButton.value;
+                              showCreateDia(context);
+                            },
                           ),
-                          onPressed: () {},
+                        ]),
+                        const SizedBox(
+                          height: 20,
                         ),
-                        // const PushToCloud(),
-                        // const PullFromCloud(),
-                      ]),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // Add note button.
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Container(
-                          color: Colors.black54,
-                          margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(
-                              color: Colors.white,
+                        // Get shared data button.
+                        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                          Flexible(
+                            child: Container(
+                              color: Colors.black54,
+                              margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: const Text(
+                                'Get shared decks',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        FloatingActionButton(
-                          heroTag: 'add',
-                          mini: true,
-                          backgroundColor: Colors.blue,
-                          child: Icon(
-                            Icons.add,
-                            color: AppTheme().currentTheme() == ThemeMode.dark
-                                ? Colors.black
-                                : Colors.white,
-                          ),
-                          onPressed: () {
-                            rotateController.reverse();
-                            moveController.reverse();
-                            openedButton.value = !openedButton.value;
-                            if (DeckManager.deckList.isEmpty) {
-                              showAddDia(context);
-                              return;
-                            }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddScene(
-                                        changeState: () {
-                                          changeState();
-                                        },
-                                      )),
-                            );
-                          },
-                        ),
-                      ]),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                  builder: (context, child) => Transform.translate(
-                    offset: Offset(
-                      0.0,
-                      -moveAnimation.value + 400.0,
-                    ),
-                    child: child,
-                  ),
-                ),
 
-                // Main control button.
-                AnimatedBuilder(
-                  animation: rotateAnimation,
-                  child: FloatingActionButton(
-                    heroTag: 'control',
-                    backgroundColor: Colors.blue,
-                    child: Icon(
-                      Icons.add,
-                      color: AppTheme().currentTheme() == ThemeMode.dark
-                          ? Colors.black
-                          : Colors.white,
+                          FloatingActionButton(
+                            heroTag: 'get shard decks',
+                            mini: true,
+                            backgroundColor: Colors.blue,
+                            child: Icon(
+                                Icons.download,
+                                color: AppTheme().currentTheme() == ThemeMode.dark
+                                    ? Colors.black
+                                    : Colors.white,
+                            ),
+                            onPressed: () {},
+                          ),
+                          // const PushToCloud(),
+                          // const PullFromCloud(),
+                        ]),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        // Add note button.
+                        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                          Container(
+                            color: Colors.black54,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: const Text(
+                              'Add',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          FloatingActionButton(
+                            heroTag: 'add',
+                            mini: true,
+                            backgroundColor: Colors.blue,
+                            child: Icon(
+                              Icons.add,
+                              color: AppTheme().currentTheme() == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              rotateController.reverse();
+                              moveController.reverse();
+                              openedButton.value = !openedButton.value;
+                              if (DeckManager.deckList.isEmpty) {
+                                showAddDia(context);
+                                return;
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddScene(
+                                          changeState: () {
+                                            changeState();
+                                          },
+                                        )),
+                              );
+                            },
+                          ),
+                        ]),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      openedButton.value = !openedButton.value;
-                      if (openedButton.value) {
-                        rotateController.forward();
-                      } else {
-                        rotateController.reverse();
-                      }
-                      if (openedButton.value) {
-                        moveController.forward();
-                      } else {
-                        moveController.reverse();
-                      }
-                    },
+                    builder: (context, child) => Transform.translate(
+                      offset: Offset(
+                        0.0,
+                        -moveAnimation.value + 400.0,
+                      ),
+                      child: child,
+                    ),
                   ),
-                  builder: (context, child) => Transform.rotate(
-                    angle: rotateAnimation.value,
-                    child: child,
+
+                  // Main control button.
+                  AnimatedBuilder(
+                    animation: rotateAnimation,
+                    child: FloatingActionButton(
+                      heroTag: 'control',
+                      backgroundColor: Colors.blue,
+                      child: Icon(
+                        Icons.add,
+                        color: AppTheme().currentTheme() == ThemeMode.dark
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                      onPressed: () {
+                        openedButton.value = !openedButton.value;
+                        if (openedButton.value) {
+                          rotateController.forward();
+                        } else {
+                          rotateController.reverse();
+                        }
+                        if (openedButton.value) {
+                          moveController.forward();
+                        } else {
+                          moveController.reverse();
+                        }
+                      },
+                    ),
+                    builder: (context, child) => Transform.rotate(
+                      angle: rotateAnimation.value,
+                      child: child,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

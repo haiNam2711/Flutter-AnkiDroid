@@ -11,12 +11,5 @@
 
 <img src="1.png" width="800" height="550"/>
 
-### Tuần 03 - Chạy 5 chương trình điều khiển
-<img src="1.GIF" width="225" height="400"/>
-<img src="2.GIF" width="225" height="300"/>
-<img src="3.GIF" width="225" height="400"/>
-<img src="4.GIF" width="225" height="400"/>
-<img src="5.GIF" width="225" height="400"/>
-
-### Tuần 04 - Lập trình giao diện Ankidroid
-<img src="week4.gif" width="225" height="400"/>
+### Tuần 07 - Mức độ bao phủ test
+<img src="test_coverage.png" width="800" height="250"/>

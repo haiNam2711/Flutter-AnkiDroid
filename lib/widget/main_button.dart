@@ -1,13 +1,13 @@
 import 'package:five_control_widget/routes/add_route.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
-//import 'package:five_control_widget/firebase/firebase.dart';
+//import 'package:five_control_widget/firebase/cloud.dart';
 import 'package:flutter/material.dart';
 
-import '../darkmode/theme.dart';
+import '../dark_mode/theme.dart';
 
 TextEditingController deckNameController = TextEditingController();
 
-class ControlButton extends StatelessWidget {
+class MainButton extends StatelessWidget {
   final BuildContext context;
   final AnimationController rotateController;
   final Animation<double> rotateAnimation;
@@ -15,7 +15,7 @@ class ControlButton extends StatelessWidget {
   final Animation<double> moveAnimation;
   final ValueNotifier<bool> openedButton;
 
-  const ControlButton(this.context, this.rotateController, this.rotateAnimation,
+  const MainButton(this.context, this.rotateController, this.rotateAnimation,
       this.moveController, this.moveAnimation, this.openedButton,
       {super.key, required this.changeState});
 
@@ -46,6 +46,7 @@ class ControlButton extends StatelessWidget {
                             margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             child: const Text(
+                              key: Key('CreateDeckWord'),
                               'Create deck',
                               style: TextStyle(
                                 color: Colors.white,
@@ -53,7 +54,8 @@ class ControlButton extends StatelessWidget {
                             ),
                           ),
                           FloatingActionButton(
-                            heroTag: 'creat deck',
+                            key: const Key('CreateDeckButton'),
+                            heroTag: 'create deck',
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: Icon(
@@ -81,6 +83,7 @@ class ControlButton extends StatelessWidget {
                               margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                               child: const Text(
+                                key: Key('GetSharedDecksWord'),
                                 'Get shared decks',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -90,7 +93,8 @@ class ControlButton extends StatelessWidget {
                           ),
 
                           FloatingActionButton(
-                            heroTag: 'get shard decks',
+                            key: const Key('GetSharedDeckButton'),
+                            heroTag: 'get shared decks',
                             mini: true,
                             backgroundColor: Colors.blue,
                             child: Icon(
@@ -114,6 +118,7 @@ class ControlButton extends StatelessWidget {
                             margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             child: const Text(
+                              key: Key('AddWord'),
                               'Add',
                               style: TextStyle(
                                 color: Colors.white,
@@ -121,6 +126,7 @@ class ControlButton extends StatelessWidget {
                             ),
                           ),
                           FloatingActionButton(
+                            key: const Key('AddButton'),
                             heroTag: 'add',
                             mini: true,
                             backgroundColor: Colors.blue,
@@ -168,6 +174,7 @@ class ControlButton extends StatelessWidget {
                   AnimatedBuilder(
                     animation: rotateAnimation,
                     child: FloatingActionButton(
+                      key: const Key('MainControlButton'),
                       heroTag: 'control',
                       backgroundColor: Colors.blue,
                       child: Icon(

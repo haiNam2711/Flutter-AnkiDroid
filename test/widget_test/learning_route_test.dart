@@ -18,7 +18,7 @@ void main() {
     testWidgets('Testing showing a empty deck', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
 
-      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){})));
+      await tester.pumpWidget(createWidgetForTesting(child: LearningRoute(deckIndex: 0, changeState: (){})));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('0 cards due.');
@@ -50,7 +50,7 @@ void main() {
       flashCard = FlashCard(frontSide, backSide, DateTime.now());
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
-      await tester.pumpWidget(createWidgetForTesting(child: SecondRoute(deckIndex: 0, changeState: (){})));
+      await tester.pumpWidget(createWidgetForTesting(child: LearningRoute(deckIndex: 0, changeState: (){})));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('test_deck1');
@@ -79,7 +79,7 @@ void main() {
 
     testWidgets('Testing back button', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
-      SecondRoute secondRoute = SecondRoute(deckIndex: 0, changeState: (){});
+      LearningRoute secondRoute = LearningRoute(deckIndex: 0, changeState: (){});
 
       await tester.pumpWidget(createWidgetForTesting(child: secondRoute));
       await tester.pumpAndSettle();

@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   Widget createWidgetForTesting({required Widget child}) {
     return MaterialApp(
+
       home: child,
     );
   }

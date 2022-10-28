@@ -1,31 +1,37 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
-import 'package:five_control_widget/darkmode/theme.dart';
+import 'package:five_control_widget/dark_mode/theme.dart';
+import 'package:five_control_widget/firebase/cloud.dart';
 
-import '../darkmode/config.dart';
+import '../dark_mode/config.dart';
 import 'package:flutter/material.dart';
 import 'learning_route.dart';
-import '../widget/control_button.dart';
+import '../widget/main_button.dart';
 
-class FirstRoute extends StatefulWidget {
-  const FirstRoute({Key? key}) : super(key: key);
+class HomeRoute extends StatefulWidget {
+  final FirebaseFirestore fireStore;
+  const HomeRoute({Key? key, required this.fireStore}) : super(key: key);
 
   @override
-  State<FirstRoute> createState() => _FirstRouteState();
+  State<HomeRoute> createState() => _HomeRouteState();
 }
 
-class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
+class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
   late AnimationController rotateController;
   late Animation<double> rotateAnimation;
 
   late AnimationController moveController;
   late Animation<double> moveAnimation;
+  late Cloud cloud;
 
   ValueNotifier<bool> openedButton = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
+
+    cloud = Cloud(widget.fireStore);
 
     rotateController = AnimationController(
       duration: const Duration(milliseconds: 200),
@@ -98,29 +104,39 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
+            IconButton (
+                onPressed: ()  async {
+                  cloud.pullFromCloud();
+                  await Future.delayed(const Duration(milliseconds: 3000));
+                  setState(() {
+
+                  });
+                },
+                icon: const Icon(
+                  Icons.download,
+                ),
+            ),
+            IconButton (
+              onPressed: () {
+                cloud.pushToCloud();
+              },
               icon: const Icon(
-                Icons.search,
+                Icons.backup,
               ),
             ),
             IconButton(
               onPressed: () {
-                setState(() {});
+                setState(() {
+
+                });
               },
-              icon: const Icon(
-                Icons.refresh,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
               icon: const Icon(
                 Icons.more_vert,
               ),
             ),
           ],
         ),
-        floatingActionButton: ControlButton(
+        floatingActionButton: MainButton(
           context,
           rotateController,
           rotateAnimation,
@@ -182,7 +198,7 @@ class _FirstRouteState extends State<FirstRoute> with TickerProviderStateMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SecondRoute(
+                          builder: (context) => LearningRoute(
                                 deckIndex: index,
                                 changeState: () {
                                   setState(() {});

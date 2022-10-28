@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/routes/home_route.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +9,11 @@ void main() {
 
   testWidgets('Testing home route widget', (WidgetTester tester) async {
     DeckManager.addDeck(deckName: 'newDeck');
+    final fireStore = FakeFirebaseFirestore();
 
-    Widget testWidget = const MediaQuery(
+    Widget testWidget = MediaQuery(
         data: MediaQueryData(),
-        child: MaterialApp(home: FirstRoute())
+        child: MaterialApp(home: HomeRoute(fireStore: fireStore,))
     );
 
     await tester.pumpWidget(testWidget);

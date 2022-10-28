@@ -40,6 +40,7 @@ class _AddSceneState extends State<AddScene> {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           leading: IconButton(
+            key: const Key('ArrowBackIconButton'),
             icon: const Icon(
               Icons.arrow_back,
             ),
@@ -58,6 +59,7 @@ class _AddSceneState extends State<AddScene> {
           ),
           actions: [
             IconButton(
+              key: const Key('CheckIconButton'),
               onPressed: () {
                 CardInformation frontSide = CardInformation(
                     text: myFrontController.text
@@ -110,7 +112,7 @@ class _AddSceneState extends State<AddScene> {
                       ),
                       Expanded(
                         child: DropdownButton<String>(
-                          key: const Key('typeDropDownButton'),
+                          key: const Key('TypeDropDownButton'),
                           value: typeValue,
                           isDense: true,
                           isExpanded: true,
@@ -159,6 +161,7 @@ class _AddSceneState extends State<AddScene> {
                       ),
                       Expanded(
                         child: DropdownButton<String>(
+                          key: const Key('DeckDropDownButton'),
                           value: deckValue,
                           isDense: true,
                           isExpanded: true,
@@ -170,6 +173,7 @@ class _AddSceneState extends State<AddScene> {
                           },
                           items: DeckManager.getDecksName().map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
+                              key: Key(value),
                               value: value,
                               child: Text(
                                 value,
@@ -212,6 +216,7 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
                   child: TextFormField(
+                    key: const Key('FrontTextFromField'),
                     controller: myFrontController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
@@ -249,6 +254,7 @@ class _AddSceneState extends State<AddScene> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 0, 30, 20),
                   child: TextFormField(
+                    key: const Key('BackTextFromField'),
                     controller: myBackController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,

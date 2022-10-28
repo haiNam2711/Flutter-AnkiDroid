@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
-import '../darkmode/theme.dart';
+import '../dark_mode/theme.dart';
 
-class SecondRoute extends StatefulWidget {
+class LearningRoute extends StatefulWidget {
   final int deckIndex;
   int cardIndex = 0;
   bool haveCard = true;
   final Function() changeState;
 
-  SecondRoute({Key? key, required this.deckIndex, required this.changeState}) : super(key: key) {
+  LearningRoute({Key? key, required this.deckIndex, required this.changeState}) : super(key: key) {
     cardIndex = DeckManager.deckList[deckIndex].getNextIndex(cardIndex);
     if (cardIndex == -1) {
       haveCard = false;
@@ -18,10 +18,10 @@ class SecondRoute extends StatefulWidget {
   }
 
   @override
-  State<SecondRoute> createState() => _SecondRouteState();
+  State<LearningRoute> createState() => _LearningRouteState();
 }
 
-class _SecondRouteState extends State<SecondRoute> {
+class _LearningRouteState extends State<LearningRoute> {
   final myFrontController = TextEditingController(); // control text of front text field
   final myBackController = TextEditingController();
   bool showAnswer = false;

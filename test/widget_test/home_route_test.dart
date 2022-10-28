@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
-import 'package:five_control_widget/darkmode/theme.dart';
+import 'package:five_control_widget/dark_mode/theme.dart';
 import 'package:five_control_widget/routes/home_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

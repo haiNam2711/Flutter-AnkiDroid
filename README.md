@@ -13,3 +13,8 @@
 
 ### Tuần 07 - Mức độ bao phủ test
 <img src="test_coverage.png" width="800" height="250"/>
+
+### Tuần 11 
+<img src="week11.gif" width="200" height="700"/>
+
+<img src="week11_2.png" width="800" height="380"/>

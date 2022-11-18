@@ -3,11 +3,15 @@ import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 
+import '../firebase/cloud.dart';
+
 // ignore: must_be_immutable
 class AddScene extends StatefulWidget {
   Function() changeState;
+  Cloud cloud;
 
-  AddScene({Key? key, required this.changeState}) : super(key: key);
+  AddScene({Key? key, required this.changeState, required this.cloud})
+      : super(key: key);
 
   @override
   State<AddScene> createState() => _AddSceneState();
@@ -18,15 +22,17 @@ class _AddSceneState extends State<AddScene> {
   String deckValue = DeckManager.deckList[0].deckName;
   double fontSize20 = 20.0;
   double fontSize15 = 15.0;
-  final myFrontController = TextEditingController(); // control text of front text field
-  final myBackController = TextEditingController(); // control text of back text field
+  final myFrontController =
+      TextEditingController(); // control text of front text field
+  final myBackController =
+      TextEditingController(); // control text of back text field
   String deckName = DeckManager.deckList[0].deckName;
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    myFrontController .dispose();
-    myBackController .dispose();
+    myFrontController.dispose();
+    myBackController.dispose();
     super.dispose();
   }
 
@@ -61,15 +67,20 @@ class _AddSceneState extends State<AddScene> {
             IconButton(
               key: const Key('CheckIconButton'),
               onPressed: () {
-                CardInformation frontSide = CardInformation(
-                    text: myFrontController.text
+                CardInformation frontSide =
+                    CardInformation(text: myFrontController.text);
+                CardInformation backSide =
+                    CardInformation(text: myBackController.text);
+                FlashCard flashCard = FlashCard(
+                  frontSide,
+                  backSide,
+                  DateTime.now(),
+                  widget.changeState,
                 );
-                CardInformation backSide = CardInformation(
-                    text: myBackController.text
-                );
-                FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
                 //print(deckName);
                 DeckManager.addCard(deckName: deckName, flashCard: flashCard);
+                DeckManager.addCardToCloud(
+                    deckName: deckName, cloud: widget.cloud);
                 Navigator.pop(context);
                 widget.changeState();
               },
@@ -171,7 +182,8 @@ class _AddSceneState extends State<AddScene> {
                               deckName = deckValue;
                             });
                           },
-                          items: DeckManager.getDecksName().map<DropdownMenuItem<String>>((String value) {
+                          items: DeckManager.getDecksName()
+                              .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               key: Key(value),
                               value: value,
@@ -303,5 +315,3 @@ class _AddSceneState extends State<AddScene> {
     );
   }
 }
-
-

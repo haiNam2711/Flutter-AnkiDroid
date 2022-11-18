@@ -1,39 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/dark_mode/theme.dart';
 import 'package:five_control_widget/dark_mode/theme_provider.dart';
+import 'package:five_control_widget/routes/log_in_route.dart';
 import 'package:flutter/material.dart';
-import 'algorithm_sm2/card.dart';
-import 'algorithm_sm2/card_information.dart';
-import 'algorithm_sm2/deck_manager.dart';
 import 'dark_mode/config.dart';
 import 'routes/home_route.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase/firebase_options.dart';
+import 'package:five_control_widget/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 void main() async {
-  for (int i = 0; i < 10; ++i) {
-    DeckManager.addDeck(deckName: 'deck$i');
-  }
-
-  CardInformation frontSide = CardInformation(text: 'this is card 0 front side');
-  CardInformation backSide = CardInformation(text: 'this is card 0 back side');
-  FlashCard flashCard = FlashCard(frontSide,backSide,DateTime.now());
-  //print(deckName);
-  DeckManager.addCard(deckName: 'deck0', flashCard: flashCard);
-
-  frontSide = CardInformation(text: 'this is card 1 front side');
-  backSide = CardInformation(text: 'this is card 1 back side');
-  flashCard = FlashCard(frontSide,backSide,DateTime.now());
-  //print(deckName);
-  DeckManager.addCard(deckName: 'deck0', flashCard: flashCard);
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -43,26 +28,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
-    appTheme.addListener((){
-      setState(() {
-
-      });
+    appTheme.addListener(() {
+      setState(() {});
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'AnkiDroid',
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
       themeMode: AppTheme().currentTheme(),
-      home: HomeRoute(fireStore: FirebaseFirestore.instance),
-
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            // Go to main page.
+            // Set up user's cloud that connected to app.
+            return HomeRoute(
+              fireStore: FirebaseFirestore.instance,
+              auth: FirebaseAuth.instance,
+            );
+          } else {
+            // Go to login page.
+            return LogInRoute(
+              fireStore: FirebaseFirestore.instance,
+              auth: FirebaseAuth.instance,
+            );
+          }
+        },
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:five_control_widget/algorithm_sm2/card.dart';
+import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 
+import '../firebase/cloud.dart';
 import 'constant.dart';
 
 class Deck {
@@ -10,6 +12,25 @@ class Deck {
 
   void addCard({required FlashCard flashCard}) {
     cardList.add(flashCard);
+  }
+
+  void addCardToCould({required int deckId, required Cloud cloud}) {
+    cloud.updateCardOnCloud(
+      deckId,
+      deckName,
+      cardList.length - 1,
+      'card${cardList.length - 1}',
+    );
+  }
+
+  void updateCardOnCloud(
+      {required int deckId, required int cardId, required Cloud cloud}) {
+    cloud.updateCardOnCloud(
+      deckId,
+      deckName,
+      cardId,
+      'card$cardId',
+    );
   }
 
   void removeCard(int index) {

@@ -1,17 +1,23 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:five_control_widget/algorithm_sm2/constant.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/dark_mode/theme.dart';
 import 'package:five_control_widget/firebase/cloud.dart';
 
 import '../dark_mode/config.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'learning_route.dart';
 import '../widget/main_button.dart';
 
 class HomeRoute extends StatefulWidget {
   final FirebaseFirestore fireStore;
-  const HomeRoute({Key? key, required this.fireStore}) : super(key: key);
+  final FirebaseAuth auth;
+
+  const HomeRoute({Key? key, required this.fireStore, required this.auth})
+      : super(key: key);
 
   @override
   State<HomeRoute> createState() => _HomeRouteState();
@@ -31,7 +37,13 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    cloud = Cloud(widget.fireStore);
+    DeckManager.removeAll();
+
+    cloud = Cloud(
+      widget.fireStore,
+      widget.auth,
+      () => {setState(() {})},
+    );
 
     rotateController = AnimationController(
       duration: const Duration(milliseconds: 200),
@@ -73,7 +85,10 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
         openedButton.value = false;
       },
       child: Scaffold(
-        drawer: const SideBar(),
+        drawer: SideBar(
+          auth: widget.auth,
+          setState: () => setState(() {}),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.blue,
           // leading: IconButton(
@@ -85,8 +100,9 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
           title: Container(
             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: Column(
-              children: const [
-                Text(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
                   'AnkiDroid',
                   style: TextStyle(
                     fontSize: 20,
@@ -94,42 +110,58 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                   ),
                 ),
                 Text(
-                  '10 cards due.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
+                  widget.auth.currentUser?.email ?? 'Wrong',
+                  style: const TextStyle(
+                    fontSize: 13,
                   ),
                 ),
               ],
             ),
           ),
           actions: [
-            IconButton (
-                onPressed: ()  async {
-                  cloud.pullFromCloud();
-                  await Future.delayed(const Duration(milliseconds: 3000));
-                  setState(() {
-
-                  });
-                },
-                icon: const Icon(
-                  Icons.download,
-                ),
-            ),
-            IconButton (
-              onPressed: () {
-                cloud.pushToCloud();
+            IconButton(
+              onPressed: () async {
+                // Show loading icon when pulling from cloud.
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        )));
+                await DeckManager.removeAll();
+                await cloud.pullFromCloud();
+                await Future.delayed(
+                    const Duration(milliseconds: Time.loadTime));
+                navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                setState(() {});
               },
               icon: const Icon(
-                Icons.backup,
+                Icons.download,
               ),
             ),
+            // IconButton (
+            //   onPressed: () async {
+            //     showDialog(
+            //         context: context,
+            //         barrierDismissible: false,
+            //         builder: (context) => const Center(child: CircularProgressIndicator(
+            //           color: Colors.blue,
+            //         ))
+            //     );
+            //     await cloud.pushToCloud();
+            //     await Future.delayed(const Duration(milliseconds: 3000));
+            //     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //   icon: const Icon(
+            //     Icons.backup,
+            //   ),
+            // ),
             IconButton(
-              onPressed: () {
-                setState(() {
-
-                });
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.more_vert,
               ),
@@ -146,9 +178,11 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
           changeState: () {
             setState(() {});
           },
+          cloud: cloud,
         ),
         body: SafeArea(
           child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 100),
             itemCount: DeckManager.deckList.length,
             itemBuilder: (context, index) {
               return Card(
@@ -203,6 +237,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                                 changeState: () {
                                   setState(() {});
                                 },
+                                cloud: cloud,
                               )),
                     );
                   },
@@ -217,7 +252,11 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
 }
 
 class SideBar extends StatelessWidget {
-  const SideBar({Key? key}) : super(key: key);
+  final FirebaseAuth auth;
+  Function() setState;
+
+  SideBar({Key? key, required this.auth, required this.setState})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -261,6 +300,14 @@ class SideBar extends StatelessWidget {
             leading: Icon(Icons.help),
             title: Text('Help'),
           ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () {
+              auth.signOut();
+              setState();
+            },
+          ),
         ],
       ),
     );
@@ -276,6 +323,7 @@ class NightModeSwitch extends StatefulWidget {
 
 class _NightModeSwitchState extends State<NightModeSwitch> {
   static bool light = false;
+
   @override
   Widget build(BuildContext context) {
     return Switch(

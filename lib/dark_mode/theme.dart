@@ -4,7 +4,7 @@ class AppTheme with ChangeNotifier {
   static bool darkMode = false;
 
   ThemeMode currentTheme() {
-    return darkMode? ThemeMode.dark : ThemeMode.light;
+    return darkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   void switchTheme() {

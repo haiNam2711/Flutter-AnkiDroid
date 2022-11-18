@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/dark_mode/theme.dart';
 import 'package:five_control_widget/dark_mode/theme_provider.dart';
 import 'package:five_control_widget/routes/log_in_route.dart';
@@ -54,8 +53,6 @@ class _MyAppState extends State<MyApp> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            // Go to main page.
-            // Set up user's cloud that connected to app.
             return HomeRoute(
               fireStore: FirebaseFirestore.instance,
               auth: FirebaseAuth.instance,

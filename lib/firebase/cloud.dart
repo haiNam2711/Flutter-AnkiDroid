@@ -50,7 +50,6 @@ class Cloud {
 
   Future<void> updateDeckOnCloud(int deckId, String deckName) async {
     FirebaseFirestore.instance.collection(deckListName).doc(deckName).set({
-      'deckId': deckId,
       'deckName': deckName,
     })
         // ignore: avoid_print

@@ -220,7 +220,7 @@ class _SignUpRouteState extends State<SignUpRoute> {
       return;
     }
 
-    await showDialog(
+    showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => const Center(child: CircularProgressIndicator()));

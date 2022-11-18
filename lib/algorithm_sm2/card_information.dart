@@ -1,4 +1,3 @@
-
 class CardInformation {
   //Image? image;
   String? text;

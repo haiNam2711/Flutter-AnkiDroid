@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -64,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '872191670095',
     projectId: 'buugo-project',
     storageBucket: 'buugo-project.appspot.com',
-    iosClientId: '872191670095-1v66h0339qc0spchh1njbnkb0g4iimrv.apps.googleusercontent.com',
+    iosClientId:
+        '872191670095-1v66h0339qc0spchh1njbnkb0g4iimrv.apps.googleusercontent.com',
     iosBundleId: 'com.example.fiveControlWidget',
   );
 }

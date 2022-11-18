@@ -12,15 +12,22 @@ class FlashCard {
   DateTime startTime;
   CardInformation? frontSide;
   CardInformation? backSide;
+  Function() setState;
 
-  FlashCard(this.frontSide, this.backSide, this.startTime);
+  FlashCard(
+    this.frontSide,
+    this.backSide,
+    this.startTime,
+    this.setState,
+  );
 
   void setTimer() {
     startTime = DateTime.now();
     Timer(
       Duration(seconds: timeNotification.toInt()),
-          () {
+      () {
         timeNotification = 0;
+        setState();
       },
     );
   }
@@ -28,102 +35,115 @@ class FlashCard {
   void againPress() {
     learnCounter += 1;
     switch (stateOfCard) {
-      case CardState.learningState: {
-        timeNotification = LearningStep.againStep;
-        setTimer();
-        break;
-      }
-      case CardState.graduatedState: {
-        easeFactor -= RelearningStep.minusAgainEase;
-        timeNotification = RelearningStep.againRelearningStep;
-        stateOfCard = CardState.relearningState;
-        setTimer();
-        break;
-      }
-      case CardState.relearningState: {
-        timeNotification = RelearningStep.againRelearningStep;
-        setTimer();
-        break;
-      }
+      case CardState.learningState:
+        {
+          timeNotification = LearningStep.againStep;
+          setTimer();
+          break;
+        }
+      case CardState.graduatedState:
+        {
+          easeFactor -= RelearningStep.minusAgainEase;
+          timeNotification = RelearningStep.againRelearningStep;
+          stateOfCard = CardState.relearningState;
+          setTimer();
+          break;
+        }
+      case CardState.relearningState:
+        {
+          timeNotification = RelearningStep.againRelearningStep;
+          setTimer();
+          break;
+        }
     }
   }
 
   void hardPress() {
     learnCounter += 1;
     switch (stateOfCard) {
-      case CardState.learningState: {
-        timeNotification = LearningStep.hardStep;
-        setTimer();
-        break;
-      }
-      case CardState.graduatedState: {
-        easeFactor = easeFactor - RelearningStep.minusHardEase;
-        currentInterval = currentInterval * GraduatingStep.defaultHardInterval;
-        timeNotification = currentInterval;
-        setTimer();
-        break;
-      }
-      case CardState.relearningState: {
-        timeNotification = RelearningStep.hardRelearningStep;
-        setTimer();
-        break;
-      }
+      case CardState.learningState:
+        {
+          timeNotification = LearningStep.hardStep;
+          setTimer();
+          break;
+        }
+      case CardState.graduatedState:
+        {
+          easeFactor = easeFactor - RelearningStep.minusHardEase;
+          currentInterval =
+              currentInterval * GraduatingStep.defaultHardInterval;
+          timeNotification = currentInterval;
+          setTimer();
+          break;
+        }
+      case CardState.relearningState:
+        {
+          timeNotification = RelearningStep.hardRelearningStep;
+          setTimer();
+          break;
+        }
     }
   }
 
   void goodPress() {
     learnCounter += 1;
     switch (stateOfCard) {
-      case CardState.learningState: {
-        if (timeNotification == LearningStep.goodStep) {
-          stateOfCard = CardState.graduatedState;
-          currentInterval = LearningStep.graduatingIvl;
-          timeNotification = currentInterval;
-        } else {
-          timeNotification = LearningStep.goodStep;
+      case CardState.learningState:
+        {
+          if (timeNotification == LearningStep.goodStep) {
+            stateOfCard = CardState.graduatedState;
+            currentInterval = LearningStep.graduatingIvl;
+            timeNotification = currentInterval;
+          } else {
+            timeNotification = LearningStep.goodStep;
+          }
+          setTimer();
+          break;
         }
-        setTimer();
-        break;
-      }
-      case CardState.graduatedState: {
-        currentInterval = currentInterval * easeFactor;
-        timeNotification = currentInterval;
-        setTimer();
-        break;
-      }
-      case CardState.relearningState: {
-        currentInterval = currentInterval * RelearningStep.newGoodInterval;
-        timeNotification = currentInterval;
-        setTimer();
-        break;
-      }
+      case CardState.graduatedState:
+        {
+          currentInterval = currentInterval * easeFactor;
+          timeNotification = currentInterval;
+          setTimer();
+          break;
+        }
+      case CardState.relearningState:
+        {
+          currentInterval = currentInterval * RelearningStep.newGoodInterval;
+          timeNotification = currentInterval;
+          setTimer();
+          break;
+        }
     }
   }
 
   void easyPress() {
     learnCounter += 1;
     switch (stateOfCard) {
-      case CardState.learningState: {
-        currentInterval = LearningStep.easyIvl;
-        timeNotification = currentInterval;
-        stateOfCard = CardState.graduatedState;
-        setTimer();
-        break;
-      }
-      case CardState.graduatedState: {
-        easeFactor += RelearningStep.addEasyEase;
-        currentInterval = currentInterval * easeFactor * GraduatingStep.defaultEaseBonus;
-        timeNotification = currentInterval;
-        setTimer();
-        break;
-      }
-      case CardState.relearningState: {
-        currentInterval = currentInterval * RelearningStep.newEasyInterval;
-        timeNotification = currentInterval;
-        setTimer();
-        break;
-      }
+      case CardState.learningState:
+        {
+          currentInterval = LearningStep.easyIvl;
+          timeNotification = currentInterval;
+          stateOfCard = CardState.graduatedState;
+          setTimer();
+          break;
+        }
+      case CardState.graduatedState:
+        {
+          easeFactor += RelearningStep.addEasyEase;
+          currentInterval =
+              currentInterval * easeFactor * GraduatingStep.defaultEaseBonus;
+          timeNotification = currentInterval;
+          setTimer();
+          break;
+        }
+      case CardState.relearningState:
+        {
+          currentInterval = currentInterval * RelearningStep.newEasyInterval;
+          timeNotification = currentInterval;
+          setTimer();
+          break;
+        }
     }
   }
-
 }

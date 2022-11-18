@@ -13,8 +13,6 @@ void main() {
     );
   }
 
-
-
   group('Counter', () {
     testWidgets('Testing showing a empty deck', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');

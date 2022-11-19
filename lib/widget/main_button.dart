@@ -1,3 +1,4 @@
+import 'package:five_control_widget/algorithm_sm2/deck.dart';
 import 'package:five_control_widget/routes/add_route.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:flutter/material.dart';
@@ -155,7 +156,8 @@ class MainButton extends StatelessWidget {
                                   moveController.reverse();
                                   openedButton.value = !openedButton.value;
                                   if (DeckManager.deckList.isEmpty) {
-                                    showAddDia(context);
+                                    showAddDia(context, 'Add card false',
+                                        'Your deck list is empty.');
                                     return;
                                   }
                                   Navigator.push(
@@ -237,6 +239,15 @@ class MainButton extends StatelessWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () {
+              for (int i = 0; i < DeckManager.deckList.length; i++) {
+                Deck deck = DeckManager.deckList.elementAt(i);
+                if (deck.deckName == deckNameController.text) {
+                  Navigator.pop(context, 'OK');
+                  showAddDia(
+                      context, 'Add card false', 'This deck already exists.');
+                  return;
+                }
+              }
               if (deckNameController.text != '') {
                 DeckManager.addDeck(deckName: deckNameController.text);
                 DeckManager.updateDeckOnCloud(
@@ -254,12 +265,12 @@ class MainButton extends StatelessWidget {
     );
   }
 
-  void showAddDia(dynamic context) {
+  void showAddDia(dynamic context, String title, String content) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Add card false'),
-        content: const Text('Your deck list is empty.'),
+        title: Text(title),
+        content: Text(content),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'OK'),

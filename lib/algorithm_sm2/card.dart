@@ -44,6 +44,9 @@ class FlashCard {
       case CardState.graduatedState:
         {
           easeFactor -= RelearningStep.minusAgainEase;
+          if (easeFactor < GraduatingStep.defaultEaseBonus) {
+            easeFactor = GraduatingStep.defaultEaseBonus;
+          }
           timeNotification = RelearningStep.againRelearningStep;
           stateOfCard = CardState.relearningState;
           setTimer();
@@ -70,6 +73,9 @@ class FlashCard {
       case CardState.graduatedState:
         {
           easeFactor = easeFactor - RelearningStep.minusHardEase;
+          if (easeFactor < GraduatingStep.defaultEaseBonus) {
+            easeFactor = GraduatingStep.defaultEaseBonus;
+          }
           currentInterval =
               currentInterval * GraduatingStep.defaultHardInterval;
           timeNotification = currentInterval;

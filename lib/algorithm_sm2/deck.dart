@@ -14,7 +14,7 @@ class Deck {
     cardList.add(flashCard);
   }
 
-  void addCardToCould({required int deckId, required Cloud cloud}) {
+  void addCardToCloud({required int deckId, required Cloud cloud}) {
     cloud.updateCardOnCloud(
       deckId,
       deckName,
@@ -75,7 +75,7 @@ class Deck {
     return cardList[cardIndex];
   }
 
-  int getCardAmout() {
+  int getCardAmount() {
     return getGraduatedCard() + getLearningCard() + getNewCard();
   }
 

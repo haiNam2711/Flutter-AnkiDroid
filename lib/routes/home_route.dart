@@ -5,6 +5,7 @@ import 'package:five_control_widget/algorithm_sm2/constant.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:five_control_widget/dark_mode/theme.dart';
 import 'package:five_control_widget/firebase/cloud.dart';
+import 'package:five_control_widget/routes/card_browser.dart';
 
 import '../dark_mode/config.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +183,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
         ),
         body: SafeArea(
           child: ListView.builder(
-            padding: const EdgeInsets.only(bottom: 100),
+            //padding: const EdgeInsets.only(bottom: 500),
             itemCount: DeckManager.deckList.length,
             itemBuilder: (context, index) {
               return Card(
@@ -268,13 +269,16 @@ class SideBar extends StatelessWidget {
             image: AssetImage('images/anki.png'),
             fit: BoxFit.fill,
           ),
-          const ListTile(
-            leading: Icon(Icons.manage_search),
-            title: Text('Decks'),
-          ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.search),
             title: Text('Card browser'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CardBrowserRoute()),
+              );
+            }, //TODO : implement
           ),
           const ListTile(
             leading: Icon(Icons.dynamic_form),

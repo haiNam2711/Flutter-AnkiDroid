@@ -66,7 +66,7 @@ class _LearningRouteState extends State<LearningRoute> {
                 ),
               ),
               Text(
-                '${DeckManager.deckList[widget.deckIndex].getCardAmout()} cards due.',
+                '${DeckManager.deckList[widget.deckIndex].getCardAmount()} cards due.',
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,

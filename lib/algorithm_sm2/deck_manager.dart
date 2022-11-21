@@ -39,7 +39,7 @@ class DeckManager {
   static void addCardToCloud({required String deckName, required Cloud cloud}) {
     for (int i = 0; i < deckList.length; i++) {
       if (deckList[i].deckName == deckName) {
-        deckList[i].addCardToCould(deckId: i, cloud: cloud);
+        deckList[i].addCardToCloud(deckId: i, cloud: cloud);
         return;
       }
     }
@@ -60,4 +60,23 @@ class DeckManager {
     }
     return res;
   }
+
+  static int getAllCardsNum(String deckName) {
+    int tmp = 0;
+    if (deckName == 'All decks.') {
+      for (int i = 0; i < deckList.length; i++) {
+        tmp += deckList[i].cardList.length;
+      }
+    } else {
+      int currDeck = 0;
+      for (int i = 0; i < deckList.length; i++) {
+        if (deckList[i].deckName == deckName) {
+          currDeck = i;
+        }
+      }
+      tmp = deckList[currDeck].cardList.length;
+    }
+    return tmp;
+  }
+
 }

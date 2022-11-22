@@ -242,11 +242,134 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                               )),
                     );
                   },
+                  onLongPress: () {
+                    String deckName = DeckManager.deckList[index].deckName;
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Deck: $deckName'),
+                            content: setupAlertDialoadContainer(index),
+                          );
+                        });
+                  },
                 ),
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget setupAlertDialoadContainer(int inpIndex) {
+    return SizedBox(
+      height: 110.0,
+      width: 300.0,
+      child: ListView.builder(
+        shrinkWrap: false,
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            return ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Rename'),
+              onTap: () {
+                Navigator.pop(context);
+                showRenameDia(inpIndex);
+              },
+            );
+          } else {
+            return ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Delete'),
+              onTap: () {
+                setState(() {
+                  DeckManager.removeDeck(inpIndex);
+                  Navigator.pop(context);
+                });
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  void showRenameDia(int index) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Rename'),
+        content: TextFormField(
+          controller: deckNameController,
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              print(index);
+              if (deckNameController.text != '') {
+                bool flag = true;
+                for (int i = 0; i < DeckManager.deckList.length; i++) {
+                  if (DeckManager.deckList[i].deckName ==
+                      deckNameController.text) {
+                    flag = false;
+                  }
+                }
+                if (flag == true) {
+                  DeckManager.deckList[index].deckName =
+                      deckNameController.text;
+                  deckNameController.text = '';
+                } else {
+                  Navigator.pop(context, 'OK');
+                  deckNameController.text = '';
+                  showAddDia('Your deck is already exist.',
+                      'Please choose other name.');
+                  return;
+                }
+              } else {
+                Navigator.pop(context, 'OK');
+                deckNameController.text = '';
+                showAddDia(
+                    'Your deck name is empty.', 'Please choose other name.');
+                return;
+              }
+              setState(() {});
+              Navigator.pop(context, 'OK');
+            },
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: AppTheme().currentTheme() == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showAddDia(String title, String content) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: AppTheme().currentTheme() == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -275,8 +398,7 @@ class SideBar extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => CardBrowserRoute()),
+                MaterialPageRoute(builder: (context) => CardBrowserRoute()),
               );
             }, //TODO : implement
           ),

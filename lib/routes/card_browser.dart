@@ -17,7 +17,7 @@ class CardBrowserRoute extends StatefulWidget {
 class _CardBrowserRouteState extends State<CardBrowserRoute> {
   TextEditingController frontSideController = TextEditingController();
   TextEditingController backSideController = TextEditingController();
-  String currentDeck = 'test1';
+  String currentDeck = DeckManager.deckList[0].deckName;
   Deck tmpDeck = DeckManager.deckList[0];
   final List<String> items = [];
   List<FlashCard> SelectedCards = [];
@@ -28,6 +28,10 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
       items.add(DeckManager.deckList[i].deckName);
     }
     currentDeck = items[0];
+    for (int i=0;i<items.length;i++) {
+      print(items[i]);
+    }
+    print(currentDeck);
     for (int i = 0; i < DeckManager.deckList[0].cardList.length; i++) {
       cardsList.add(DeckManager.deckList[0].cardList[i]);
     }
@@ -211,7 +215,7 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
       context: context,
       builder: (BuildContext context) =>
           AlertDialog(
-            title: Text('Edit a card from $currentDeck'),
+            title: Text('Edit a card from $currentDeck',style: TextStyle(color: Colors.black),),
             content: Column(mainAxisSize: MainAxisSize.min, children: [
               TextFormField(
                 controller: frontSideController,

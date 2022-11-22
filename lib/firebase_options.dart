@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBDUOepJgBxEtMtPTLw4qXBkiXdVUeZ9OM',
-    appId: '1:872191670095:android:f85785b5d6df5d0a53373a',
-    messagingSenderId: '872191670095',
-    projectId: 'buugo-project',
-    storageBucket: 'buugo-project.appspot.com',
+    apiKey: 'AIzaSyCjPqF-nWsEOL_yRV4Ba4ByPSwNcRSRlA0',
+    appId: '1:58210022238:android:87c4fdddf9c7dc5c0bd5cf',
+    messagingSenderId: '58210022238',
+    projectId: 'flutter-ankidroid-2bb2f',
+    storageBucket: 'flutter-ankidroid-2bb2f.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC2jfFzikL5_4Fzd5IbT9WY47tVD4VWIUw',
-    appId: '1:872191670095:ios:c54fc1d63fc643ef53373a',
-    messagingSenderId: '872191670095',
-    projectId: 'buugo-project',
-    storageBucket: 'buugo-project.appspot.com',
-    iosClientId:
-        '872191670095-1v66h0339qc0spchh1njbnkb0g4iimrv.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBhXDS-43DCK7Bk9qFUDR_AWX7dTq1kuTo',
+    appId: '1:58210022238:ios:d5175074a6bd52790bd5cf',
+    messagingSenderId: '58210022238',
+    projectId: 'flutter-ankidroid-2bb2f',
+    storageBucket: 'flutter-ankidroid-2bb2f.appspot.com',
+    iosClientId: '58210022238-0h27ef0j85aje5int7bruhhiqp29h99t.apps.googleusercontent.com',
     iosBundleId: 'com.example.fiveControlWidget',
   );
 }

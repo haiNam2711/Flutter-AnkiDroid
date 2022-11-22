@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "872191670095",
-    "project_id": "buugo-project",
-    "storage_bucket": "buugo-project.appspot.com"
+    "project_number": "58210022238",
+    "project_id": "flutter-ankidroid-2bb2f",
+    "storage_bucket": "flutter-ankidroid-2bb2f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:872191670095:android:f85785b5d6df5d0a53373a",
+        "mobilesdk_app_id": "1:58210022238:android:87c4fdddf9c7dc5c0bd5cf",
         "android_client_info": {
           "package_name": "com.example.five_control_widget"
         }
       },
       "oauth_client": [
         {
-          "client_id": "872191670095-ug9taapv74h4bnrdqdmhdrtgo10f3ach.apps.googleusercontent.com",
+          "client_id": "58210022238-o92r2ktt2pf0m9i0q6uqaqom9dv2v2at.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDUOepJgBxEtMtPTLw4qXBkiXdVUeZ9OM"
+          "current_key": "AIzaSyCjPqF-nWsEOL_yRV4Ba4ByPSwNcRSRlA0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "872191670095-ug9taapv74h4bnrdqdmhdrtgo10f3ach.apps.googleusercontent.com",
+              "client_id": "58210022238-o92r2ktt2pf0m9i0q6uqaqom9dv2v2at.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

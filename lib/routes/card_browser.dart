@@ -28,7 +28,7 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
       items.add(DeckManager.deckList[i].deckName);
     }
     currentDeck = items[0];
-    for (int i=0;i<items.length;i++) {
+    for (int i = 0; i < items.length; i++) {
       print(items[i]);
     }
     print(currentDeck);
@@ -71,14 +71,22 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
             },
             items: items
                 .map<DropdownMenuItem<String>>(
-                    (String value) =>
-                    DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ))
+                    (String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value,
+                              style: TextStyle(
+                                color:
+                                    AppTheme().currentTheme() == ThemeMode.dark
+                                        ? Colors.teal
+                                        : Colors.black,
+                              )),
+                        ))
                 .toList(),
 
-            icon: const Icon(Icons.arrow_drop_down),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.teal,
+            ),
             iconSize: 35,
             //underline: SizedBox(),
           ),
@@ -101,20 +109,18 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
               ],
               items: [
                 ...MenuItems.firstItems.map(
-                      (item) =>
-                      DropdownMenuItem<MenuItem>(
-                        value: item,
-                        child: MenuItems.buildItem(item),
-                      ),
+                  (item) => DropdownMenuItem<MenuItem>(
+                    value: item,
+                    child: MenuItems.buildItem(item),
+                  ),
                 ),
                 const DropdownMenuItem<Divider>(
                     enabled: false, child: Divider()),
                 ...MenuItems.secondItems.map(
-                      (item) =>
-                      DropdownMenuItem<MenuItem>(
-                        value: item,
-                        child: MenuItems.buildItem(item),
-                      ),
+                  (item) => DropdownMenuItem<MenuItem>(
+                    value: item,
+                    child: MenuItems.buildItem(item),
+                  ),
                 ),
               ],
               onChanged: (value) {
@@ -122,6 +128,8 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
                   case MenuItems.edit:
                     if (SelectedCards.length == 1) {
                       showEditDia(SelectedCards[0]);
+                      SelectedCards = [];
+                      setState(() {});
                     } else {
                       showFailDia(
                           'Edit Card Fail.', 'Your card number is not valid.');
@@ -169,19 +177,22 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
     );
   }
 
-  List<DataColumn> getColumn(List<String> columns) =>
-      columns.map((String column) =>
-          DataColumn(label: Text(column, style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: AppTheme().currentTheme() == ThemeMode.dark
-                ? Colors.black
-                : Colors.black,
-          ), ))).toList();
+  List<DataColumn> getColumn(List<String> columns) => columns
+      .map((String column) => DataColumn(
+              label: Text(
+            column,
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w400,
+              color: AppTheme().currentTheme() == ThemeMode.dark
+                  ? Colors.white
+                  : Colors.black,
+            ),
+          )))
+      .toList();
 
-  List<DataRow> getRow(List<FlashCard> rows) =>
-      rows
-          .map((FlashCard card) =>
-          DataRow(
+  List<DataRow> getRow(List<FlashCard> rows) => rows
+      .map((FlashCard card) => DataRow(
               selected: SelectedCards.contains(card),
               onSelectChanged: (isSelected) {
                 setState(() {
@@ -193,88 +204,117 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
                 });
               },
               cells: [
-                DataCell(
-                    Container(width: 150, child: Text(card.frontSide!.text!,style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: AppTheme().currentTheme() == ThemeMode.dark
-                          ? Colors.black
-                          : Colors.black,
-                    ),))),
-                DataCell(
-                    Container(width: 150, child: Text(card.backSide!.text!,style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: AppTheme().currentTheme() == ThemeMode.dark
-                          ? Colors.black
-                          : Colors.black,
-                    ),)))
+                DataCell(Container(
+                    width: 150,
+                    child: Text(
+                      card.frontSide!.text!,
+                      style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme().currentTheme() == ThemeMode.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ))),
+                DataCell(Container(
+                    width: 150,
+                    child: Text(
+                      card.backSide!.text!,
+                      style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme().currentTheme() == ThemeMode.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    )))
               ]))
-          .toList();
+      .toList();
 
   void showEditDia(FlashCard flashCard) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) =>
-          AlertDialog(
-            title: Text('Edit a card from $currentDeck',style: TextStyle(color: Colors.black),),
-            content: Column(mainAxisSize: MainAxisSize.min, children: [
-              TextFormField(
-                controller: frontSideController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-              TextFormField(
-                controller: backSideController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-            ]),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    SelectedCards = [];
-                    int index = tmpDeck.cardList.indexOf(flashCard);
-                    tmpDeck.cardList[index].frontSide?.text =
-                        frontSideController.text;
-                    tmpDeck.cardList[index].backSide?.text =
-                        backSideController.text;
-
-                    frontSideController.text = '';
-                    backSideController.text = '';
-                  });
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
-            ],
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Edit a card from $currentDeck',
+          style: TextStyle(
+            color: AppTheme().currentTheme() == ThemeMode.dark
+                ? Colors.white
+                : Colors.black,
           ),
+        ),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          TextFormField(
+            controller: frontSideController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            style: const TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          TextFormField(
+            controller: backSideController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            style: const TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ]),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              setState(() {
+                SelectedCards = [];
+                int index = tmpDeck.cardList.indexOf(flashCard);
+                tmpDeck.cardList[index].frontSide?.text =
+                    frontSideController.text;
+                tmpDeck.cardList[index].backSide?.text =
+                    backSideController.text;
+
+                frontSideController.text = '';
+                backSideController.text = '';
+              });
+              Navigator.pop(context);
+            },
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: AppTheme().currentTheme() == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   void showFailDia(String title, String content) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) =>
-          AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'OK');
-                  SelectedCards = [];
-                  setState(() {});
-                },
-                child: const Text('OK'),
-              )
-            ],
-          ),
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'OK');
+              SelectedCards = [];
+              setState(() {});
+            },
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: AppTheme().currentTheme() == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -316,10 +356,10 @@ class MenuItems {
   static onChanged(BuildContext context, MenuItem item, FlashCard fc) {
     switch (item) {
       case MenuItems.edit:
-      //Do something
+        //Do something
         break;
       case MenuItems.delete:
-      //Do something
+        //Do something
         break;
     }
   }

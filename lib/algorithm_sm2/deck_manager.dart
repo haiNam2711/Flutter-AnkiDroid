@@ -13,13 +13,16 @@ class DeckManager {
   static void updateDeckOnCloud(
       {required String deckName, required Cloud cloud}) {
     cloud.updateDeckOnCloud(
-      deckList.length - 1,
       deckName,
     );
   }
 
   static void removeDeck(int index) {
     deckList.removeAt(index);
+  }
+
+  static void removeDeckOnCloud(String deckName, Cloud cloud) {
+    cloud.removeDeckOnCloud(deckName);
   }
 
   static Future<void> removeAll() async {
@@ -49,6 +52,14 @@ class DeckManager {
     for (int i = 0; i < deckList.length; i++) {
       if (deckList[i].deckName == deckName) {
         deckList[i].removeCard(index);
+      }
+    }
+  }
+
+  static void removeCardOnCloud(String deckName, String cardName, Cloud cloud) {
+    for (int i = 0; i < deckList.length; i++) {
+      if (deckList[i].deckName == deckName) {
+        deckList[i].removeCardOnCloud(deckName, cardName, cloud);
       }
     }
   }

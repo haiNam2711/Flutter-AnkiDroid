@@ -3,6 +3,7 @@ import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 
+import '../dark_mode/theme.dart';
 import '../firebase/cloud.dart';
 
 // ignore: must_be_immutable
@@ -51,6 +52,7 @@ class _AddSceneState extends State<AddScene> {
               Icons.arrow_back,
             ),
             onPressed: () {
+              widget.changeState();
               Navigator.pop(context);
             },
           ),
@@ -81,8 +83,10 @@ class _AddSceneState extends State<AddScene> {
                 DeckManager.addCard(deckName: deckName, flashCard: flashCard);
                 DeckManager.addCardToCloud(
                     deckName: deckName, cloud: widget.cloud);
-                Navigator.pop(context);
-                widget.changeState();
+
+                myFrontController.text = '';
+                myBackController.text = '';
+                showFailDia('Success', 'Your card is created successfully!');
               },
               icon: const Icon(
                 Icons.check,
@@ -311,6 +315,32 @@ class _AddSceneState extends State<AddScene> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void showFailDia(String title, String content) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'OK');
+              setState(() {});
+            },
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: AppTheme().currentTheme() == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

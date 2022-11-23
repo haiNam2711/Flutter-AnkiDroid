@@ -5,10 +5,15 @@ import 'package:flutter/material.dart';
 import '../algorithm_sm2/deck.dart';
 import '../algorithm_sm2/deck_manager.dart';
 import '../dark_mode/theme.dart';
+import '../firebase/cloud.dart';
 import '../widget/scrollable_widget.dart';
 
 class CardBrowserRoute extends StatefulWidget {
-  const CardBrowserRoute({Key? key}) : super(key: key);
+  final Function() setHomeState;
+  final Cloud cloud;
+  const CardBrowserRoute(
+      {Key? key, required this.setHomeState, required this.cloud})
+      : super(key: key);
 
   @override
   State<CardBrowserRoute> createState() => _CardBrowserRouteState();
@@ -47,6 +52,7 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
             Icons.arrow_back,
           ),
           onPressed: () {
+            widget.setHomeState();
             Navigator.pop(context);
           },
         ),
@@ -143,9 +149,14 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
                         FlashCard fc = SelectedCards[i];
                         cardsList.remove(fc);
                         tmpDeck.cardList.remove(fc);
+                        tmpDeck.removeCardOnCloud(
+                            tmpDeck.deckName, fc.name, widget.cloud);
                       }
                       SelectedCards = [];
                       setState(() {});
+                    } else {
+                      showFailDia(
+                          'Delete Card Fail.', 'Your must select cards to delete.');
                     }
                     break;
                 }
@@ -271,6 +282,12 @@ class _CardBrowserRouteState extends State<CardBrowserRoute> {
                     frontSideController.text;
                 tmpDeck.cardList[index].backSide?.text =
                     backSideController.text;
+                for (int i = 0; i < DeckManager.deckList.length; ++i) {
+                  if (DeckManager.deckList[i].deckName == currentDeck) {
+                    tmpDeck.updateCardOnCloud(deckId: i, cardId: index, cloud: widget.cloud);
+                    break;
+                  }
+                }
 
                 frontSideController.text = '';
                 backSideController.text = '';

@@ -89,6 +89,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
         drawer: SideBar(
           auth: widget.auth,
           setState: () => setState(() {}),
+          cloud: cloud,
         ),
         appBar: AppBar(
           backgroundColor: Colors.blue,
@@ -285,7 +286,9 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
               title: const Text('Delete'),
               onTap: () {
                 setState(() {
+                  String deckName = DeckManager.deckList[inpIndex].deckName;
                   DeckManager.removeDeck(inpIndex);
+                  DeckManager.removeDeckOnCloud(deckName, cloud);
                   Navigator.pop(context);
                 });
               },
@@ -317,8 +320,10 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                   }
                 }
                 if (flag == true) {
-                  DeckManager.deckList[index].deckName =
-                      deckNameController.text;
+                  // DeckManager.deckList[index].deckName =
+                  //     deckNameController.text;
+                  DeckManager.deckList[index]
+                      .renameDeckOnCloud(index, deckNameController.text, cloud);
                   deckNameController.text = '';
                 } else {
                   Navigator.pop(context, 'OK');
@@ -377,9 +382,14 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
 
 class SideBar extends StatelessWidget {
   final FirebaseAuth auth;
-  Function() setState;
+  final Function() setState;
+  final Cloud cloud;
 
-  SideBar({Key? key, required this.auth, required this.setState})
+  const SideBar(
+      {Key? key,
+      required this.auth,
+      required this.setState,
+      required this.cloud})
       : super(key: key);
 
   @override
@@ -398,7 +408,11 @@ class SideBar extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CardBrowserRoute()),
+                MaterialPageRoute(
+                    builder: (context) => CardBrowserRoute(
+                          setHomeState: setState,
+                          cloud: cloud,
+                        )),
               );
             }, //TODO : implement
           ),

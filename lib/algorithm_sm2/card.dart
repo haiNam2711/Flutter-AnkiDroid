@@ -13,13 +13,16 @@ class FlashCard {
   CardInformation? frontSide;
   CardInformation? backSide;
   Function() setState;
+  String name = '';
 
   FlashCard(
     this.frontSide,
     this.backSide,
     this.startTime,
     this.setState,
-  );
+  ) {
+    name = 'card${DateTime.now()}';
+  }
 
   void setTimer() {
     startTime = DateTime.now();

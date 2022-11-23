@@ -24,7 +24,7 @@ class Cloud {
         .collection('cardList')
         .doc(cardName)
         .set({
-      'cardId': cardId,
+      'name': cardName,
       'startTime': DeckManager.deckList[deckId].cardList[cardId].startTime,
       'easeFactor': DeckManager.deckList[deckId].cardList[cardId].easeFactor,
       'learnCounter':
@@ -48,7 +48,7 @@ class Cloud {
             print('Failed to set Card $cardId on Deck $deckName: $error'));
   }
 
-  Future<void> updateDeckOnCloud(int deckId, String deckName) async {
+  Future<void> updateDeckOnCloud(String deckName) async {
     FirebaseFirestore.instance.collection(deckListName).doc(deckName).set({
       'deckName': deckName,
     })
@@ -58,79 +58,46 @@ class Cloud {
         .catchError((error) => print('Failed to set Deck $deckName: $error'));
   }
 
-  // Future<void> pushToCloud() async {
-  //   CollectionReference deckList = fireStore.collection(deckListName);
-  //   print(deckListName);
-  //
-  //   // Remove excess decks
-  //   deckList.get().then((decks) {
-  //     for (var deck in decks.docs) {
-  //       if (deck.get('deckId') + 1 > DeckManager.deckList.length) {
-  //         deckList.doc('deck${deck.get('deckId')}').delete();
-  //       }
-  //     }
-  //   });
-  //
-  //   // Add current decks
-  //   for (int deckId = 0; deckId < DeckManager.deckList.length; ++deckId) {
-  //     deckList.doc('deck$deckId').set({
-  //       'deckId': deckId, // John Doe
-  //       'deckName': DeckManager.deckList[deckId].deckName, // Stokes and Sons
-  //     })
-  //         // ignore: avoid_print
-  //         //.then((value) => print('Deck $deckId is set'))
-  //         // ignore: avoid_print
-  //         .catchError((error) => print('Failed to set Deck $deckId: $error'));
-  //
-  //     // Remove excess cards
-  //     CollectionReference cardList =
-  //         deckList.doc('deck$deckId').collection('cardList');
-  //     cardList.get().then((cards) {
-  //       for (var card in cards.docs) {
-  //         if (card.get('cardId') + 1 >
-  //             DeckManager.deckList[deckId].cardList.length) {
-  //           cardList.doc('card${card.get('cardId')}').delete();
-  //         }
-  //       }
-  //     });
-  //
-  //     // Add current cards
-  //     for (int cardId = 0;
-  //         cardId < DeckManager.deckList[deckId].cardList.length;
-  //         ++cardId) {
-  //       deckList
-  //           .doc('deck$deckId')
-  //           .collection('cardList')
-  //           .doc('card$cardId')
-  //           .set({
-  //         'cardId': cardId,
-  //         'startTime': DeckManager.deckList[deckId].cardList[cardId].startTime,
-  //         'easeFactor':
-  //             DeckManager.deckList[deckId].cardList[cardId].easeFactor,
-  //         'learnCounter':
-  //             DeckManager.deckList[deckId].cardList[cardId].learnCounter,
-  //         'stateOfCard':
-  //             DeckManager.deckList[deckId].cardList[cardId].stateOfCard,
-  //         'currentInterval':
-  //             DeckManager.deckList[deckId].cardList[cardId].currentInterval,
-  //         'timeNotification':
-  //             DeckManager.deckList[deckId].cardList[cardId].timeNotification,
-  //         'frontSide': {
-  //           'text':
-  //               DeckManager.deckList[deckId].cardList[cardId].frontSide?.text,
-  //         },
-  //         'backSide': {
-  //           'text':
-  //               DeckManager.deckList[deckId].cardList[cardId].backSide?.text,
-  //         },
-  //       })
-  //           // ignore: avoid_print
-  //           //.then((value) => print('Card $cardId is set'))
-  //           // ignore: avoid_print
-  //           .catchError((error) => print('Failed to set Card $cardId: $error'));
-  //     }
-  //   }
-  // }
+  Future<void> removeCardOnCloud(String deckName, String cardName) async {
+    await FirebaseFirestore.instance
+        .collection(deckListName)
+        .doc(deckName)
+        .collection('cardList')
+        .get()
+        .then((cards) {
+      for (var card in cards.docs) {
+        if (card.get('name') == cardName) {
+          card.reference.delete();
+          return;
+        }
+      }
+    });
+  }
+
+  Future<void> removeDeckOnCloud(String deckName) async {
+    await FirebaseFirestore.instance
+        .collection(deckListName)
+        .doc(deckName)
+        .collection('cardList')
+        .get()
+        .then((cards) {
+      for (var card in cards.docs) {
+        card.reference.delete();
+      }
+    });
+
+    await FirebaseFirestore.instance
+        .collection(deckListName)
+        .get()
+        .then((decks) {
+      for (var deck in decks.docs) {
+        if (deck.get('deckName') == deckName) {
+          deck.reference.delete();
+          return;
+        }
+      }
+    });
+  }
 
   Future<void> pullFromCloud() async {
     CollectionReference deckList = fireStore.collection(deckListName);
@@ -179,6 +146,8 @@ class Cloud {
             if (timeNotification > 0) {
               DeckManager.deckList[deckId].cardList[cardId].setTimer();
             }
+            DeckManager.deckList[deckId].cardList[cardId].name =
+                card.get('name');
             DeckManager.deckList[deckId].cardList[cardId].currentInterval =
                 card.get('currentInterval');
             DeckManager.deckList[deckId].cardList[cardId].stateOfCard =

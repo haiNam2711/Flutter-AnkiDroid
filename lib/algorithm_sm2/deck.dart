@@ -15,11 +15,12 @@ class Deck {
   }
 
   void addCardToCloud({required int deckId, required Cloud cloud}) {
+    int cardId = cardList.length - 1;
     cloud.updateCardOnCloud(
       deckId,
       deckName,
-      cardList.length - 1,
-      'card${cardList.length - 1}',
+      cardId,
+      cardList[cardId].name,
     );
   }
 
@@ -29,12 +30,25 @@ class Deck {
       deckId,
       deckName,
       cardId,
-      'card$cardId',
+      cardList[cardId].name,
     );
   }
 
   void removeCard(int index) {
     cardList.removeAt(index);
+  }
+
+  void removeCardOnCloud(String deckName, String cardName, Cloud cloud) {
+    cloud.removeCardOnCloud(deckName, cardName);
+  }
+
+  void renameDeckOnCloud(int deckId, String deckName, Cloud cloud) {
+    cloud.updateDeckOnCloud(deckName);
+    for (int i = 0; i < cardList.length; i++) {
+      cloud.updateCardOnCloud(deckId, deckName, i, cardList[i].name);
+    }
+    cloud.removeDeckOnCloud(this.deckName);
+    this.deckName = deckName;
   }
 
   int getNewCard() {

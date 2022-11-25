@@ -1,4 +1,6 @@
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/firebase/cloud.dart';
 import 'package:five_control_widget/routes/add_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,10 +14,19 @@ void main() {
     for (int i = 0; i < 50; ++i) {
       DeckManager.addDeck(deckName: 'deck$i');
     }
+    final fireStore = FakeFirebaseFirestore();
+    final cloud = Cloud(
+      fireStore,
+      'Test',
+          () => {},
+    );
 
     Widget testWidget = MediaQuery(
         data: const MediaQueryData(),
-        child: MaterialApp(home: AddScene(changeState: testChangeState))
+        child: MaterialApp(home: AddScene(
+            changeState: testChangeState,
+            cloud: cloud,
+        ))
     );
 
     // pump widget

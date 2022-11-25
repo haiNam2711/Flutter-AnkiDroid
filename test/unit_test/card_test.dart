@@ -1,3 +1,4 @@
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 import 'package:five_control_widget/algorithm_sm2/card_information.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,7 +8,12 @@ void main() {
   test('Again Press on new card or learn card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+      () => {},
+    );
 
     flashCard.againPress();
 
@@ -25,7 +31,12 @@ void main() {
   test('Again Press on graduated card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+          () => {},
+    );
 
     flashCard.easyPress();
     flashCard.againPress();
@@ -43,7 +54,12 @@ void main() {
   test('Again Press on relearning card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+          () => {},
+    );
 
     flashCard.easyPress();
     flashCard.againPress();
@@ -63,7 +79,12 @@ void main() {
   test('Hard Press on new card or learn card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+          () => {},
+    );
 
     flashCard.hardPress();
 
@@ -81,7 +102,12 @@ void main() {
   test('Hard Press on graduated card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+          () => {},
+    );
 
     flashCard.easyPress();
     flashCard.againPress();
@@ -100,7 +126,12 @@ void main() {
   test('Hard Press on relearning card', () {
     CardInformation frontSide = CardInformation(text: 'front');
     CardInformation backSide = CardInformation(text: 'back');
-    FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+    FlashCard flashCard = FlashCard(
+      frontSide,
+      backSide,
+      DateTime.now(),
+          () => {},
+    );
 
     flashCard.easyPress();
     flashCard.againPress();

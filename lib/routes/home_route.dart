@@ -15,9 +15,17 @@ import '../widget/main_button.dart';
 
 class HomeRoute extends StatefulWidget {
   final FirebaseFirestore fireStore;
-  final FirebaseAuth auth;
 
-  const HomeRoute({Key? key, required this.fireStore, required this.auth})
+  final Function() logOut;
+  final String userId;
+  final String userEmail;
+
+  const HomeRoute(
+      {Key? key,
+      required this.fireStore,
+      required this.userId,
+      required this.userEmail,
+      required this.logOut})
       : super(key: key);
 
   @override
@@ -42,7 +50,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
 
     cloud = Cloud(
       widget.fireStore,
-      widget.auth,
+      widget.userId,
       () => {setState(() {})},
     );
 
@@ -87,7 +95,8 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
       },
       child: Scaffold(
         drawer: SideBar(
-          auth: widget.auth,
+          userEmail: widget.userEmail,
+          logOut: widget.logOut,
           setState: () => setState(() {}),
           cloud: cloud,
         ),
@@ -112,7 +121,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                   ),
                 ),
                 Text(
-                  widget.auth.currentUser?.email ?? 'Wrong',
+                  widget.userEmail,
                   style: const TextStyle(
                     fontSize: 13,
                   ),
@@ -381,13 +390,15 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
 }
 
 class SideBar extends StatelessWidget {
-  final FirebaseAuth auth;
   final Function() setState;
   final Cloud cloud;
+  final Function() logOut;
+  final String userEmail;
 
   const SideBar(
       {Key? key,
-      required this.auth,
+      required this.userEmail,
+      required this.logOut,
       required this.setState,
       required this.cloud})
       : super(key: key);
@@ -442,9 +453,9 @@ class SideBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.logout),
-            title: Text('Logout'),
+            title: const Text('Logout'),
             onTap: () {
-              auth.signOut();
+              logOut();
               setState();
             },
           ),

@@ -8,17 +8,14 @@ import '../algorithm_sm2/card_information.dart';
 
 class Cloud {
   final FirebaseFirestore fireStore;
-  final FirebaseAuth auth;
-  late String deckListName;
+  final String deckListName;
   Function() setState;
 
-  Cloud(this.fireStore, this.auth, this.setState) {
-    deckListName = auth.currentUser?.uid.trim() ?? 'NotFound';
-  }
+  Cloud(this.fireStore, this.deckListName, this.setState);
 
   Future<void> updateCardOnCloud(
       int deckId, String deckName, int cardId, String cardName) async {
-    FirebaseFirestore.instance
+    fireStore
         .collection(deckListName)
         .doc(deckName)
         .collection('cardList')
@@ -49,7 +46,7 @@ class Cloud {
   }
 
   Future<void> updateDeckOnCloud(String deckName) async {
-    FirebaseFirestore.instance.collection(deckListName).doc(deckName).set({
+    fireStore.collection(deckListName).doc(deckName).set({
       'deckName': deckName,
     })
         // ignore: avoid_print
@@ -59,7 +56,7 @@ class Cloud {
   }
 
   Future<void> removeCardOnCloud(String deckName, String cardName) async {
-    await FirebaseFirestore.instance
+    await fireStore
         .collection(deckListName)
         .doc(deckName)
         .collection('cardList')
@@ -75,7 +72,7 @@ class Cloud {
   }
 
   Future<void> removeDeckOnCloud(String deckName) async {
-    await FirebaseFirestore.instance
+    await fireStore
         .collection(deckListName)
         .doc(deckName)
         .collection('cardList')
@@ -86,7 +83,7 @@ class Cloud {
       }
     });
 
-    await FirebaseFirestore.instance
+    await fireStore
         .collection(deckListName)
         .get()
         .then((decks) {

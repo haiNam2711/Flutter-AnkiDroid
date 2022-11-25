@@ -1,5 +1,6 @@
 import 'package:five_control_widget/algorithm_sm2/card_information.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/routes/image_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 
@@ -223,7 +224,15 @@ class _AddSceneState extends State<AddScene> {
                         icon: const Icon(
                           Icons.attachment,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: showLinkOption(),
+                                );
+                              });
+                        },
                       ),
                     ],
                   ),
@@ -261,7 +270,15 @@ class _AddSceneState extends State<AddScene> {
                         icon: const Icon(
                           Icons.attachment,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: showLinkOption(),
+                                );
+                              });
+                        },
                       ),
                     ],
                   ),
@@ -341,6 +358,47 @@ class _AddSceneState extends State<AddScene> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget showLinkOption() {
+    return SizedBox(
+      height: 110.0,
+      width: 300.0,
+      child: ListView.builder(
+        shrinkWrap: false,
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            return ListTile(
+              leading: const Icon(Icons.image),
+              title: const Text('Add Image'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ImageEditor(
+                        changeState: () {
+                          widget.changeState();
+                        },
+                        cloud: widget.cloud,
+                        cardName: 'test name',
+                        type: 'test type',
+                      )),
+                );
+              },
+            );
+          } else {
+            return ListTile(
+              leading: const Icon(Icons.cancel_outlined),
+              title: const Text('Cancel'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            );
+          }
+        },
       ),
     );
   }

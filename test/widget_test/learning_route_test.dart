@@ -1,6 +1,8 @@
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/card.dart';
 import 'package:five_control_widget/algorithm_sm2/card_information.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/firebase/cloud.dart';
 import 'package:five_control_widget/routes/learning_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   Widget createWidgetForTesting({required Widget child}) {
     return MaterialApp(
-
       home: child,
     );
   }
@@ -16,8 +17,19 @@ void main() {
   group('Counter', () {
     testWidgets('Testing showing a empty deck', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
+      final fireStore = FakeFirebaseFirestore();
+      final cloud = Cloud(
+        fireStore,
+        'Test',
+        () => {},
+      );
 
-      await tester.pumpWidget(createWidgetForTesting(child: LearningRoute(deckIndex: 0, changeState: (){})));
+      await tester.pumpWidget(createWidgetForTesting(
+          child: LearningRoute(
+        deckIndex: 0,
+        changeState: () {},
+        cloud: cloud,
+      )));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('0 cards due.');
@@ -31,25 +43,56 @@ void main() {
       DeckManager.addDeck(deckName: 'test_deck1');
       CardInformation frontSide = CardInformation(text: 'front 1');
       CardInformation backSide = CardInformation(text: 'back 1');
-      FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      FlashCard flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+        () => {},
+      );
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
       frontSide = CardInformation(text: 'front 2');
       backSide = CardInformation(text: 'back 2');
-      flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+        () => {},
+      );
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
       frontSide = CardInformation(text: 'front 3');
       backSide = CardInformation(text: 'back 3');
-      flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+        () => {},
+      );
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
       frontSide = CardInformation(text: 'front 4');
       backSide = CardInformation(text: 'back 4');
-      flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+        () => {},
+      );
       DeckManager.addCard(deckName: 'test_deck1', flashCard: flashCard);
 
-      await tester.pumpWidget(createWidgetForTesting(child: LearningRoute(deckIndex: 0, changeState: (){})));
+      final fireStore = FakeFirebaseFirestore();
+      final cloud = Cloud(
+        fireStore,
+        'Test',
+        () => {},
+      );
+      await tester.pumpWidget(createWidgetForTesting(
+          child: LearningRoute(
+        deckIndex: 0,
+        changeState: () {},
+        cloud: cloud,
+      )));
       await tester.pumpAndSettle();
 
       final titleFinder = find.text('test_deck1');
@@ -71,18 +114,21 @@ void main() {
 
       final showFourButtons = find.byType(ElevatedButton);
       expect(showFourButtons, findsNWidgets(4));
-
-
     });
-
 
     testWidgets('Testing back button', (tester) async {
       DeckManager.addDeck(deckName: 'test_deck1');
-      LearningRoute secondRoute = LearningRoute(deckIndex: 0, changeState: (){});
+      final fireStore = FakeFirebaseFirestore();
+      final cloud = Cloud(
+        fireStore,
+        'Test',
+            () => {},
+      );
+      LearningRoute secondRoute =
+          LearningRoute(deckIndex: 0, changeState: () {}, cloud: cloud);
 
       await tester.pumpWidget(createWidgetForTesting(child: secondRoute));
       await tester.pumpAndSettle();
-
 
       // Tap the back button.
       await tester.tap(find.byIcon(Icons.arrow_back));

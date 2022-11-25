@@ -40,6 +40,10 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  void logOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,7 +59,9 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.hasData) {
             return HomeRoute(
               fireStore: FirebaseFirestore.instance,
-              auth: FirebaseAuth.instance,
+              userId: FirebaseAuth.instance.currentUser?.uid.trim() ?? 'NotFound',
+              userEmail: FirebaseAuth.instance.currentUser?.email ?? 'Wrong',
+              logOut: logOut,
             );
           } else {
             // Go to login page.

@@ -18,14 +18,19 @@ void main() {
       DeckManager.addDeck(deckName: 'newDeck');
       CardInformation frontSide = CardInformation(text: 'front');
       CardInformation backSide = CardInformation(text: 'back');
-      FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      FlashCard flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+            () => {},
+      );
       DeckManager.addCard(deckName: 'newDeck', flashCard: flashCard);
-      expect(DeckManager.deckList[0].getCardAmout(), 1);
+      expect(DeckManager.deckList[0].getCardAmount(), 1);
     });
 
     test('deck manager should remove card successfully', () {
       DeckManager.removeCard('newDeck', 0);
-      expect(DeckManager.deckList[0].getCardAmout(), 0);
+      expect(DeckManager.deckList[0].getCardAmount(), 0);
     });
 
     test('deck manager should return a list of deck name', () {

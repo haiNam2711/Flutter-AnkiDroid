@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:five_control_widget/algorithm_sm2/deck_manager.dart';
+import 'package:five_control_widget/firebase/cloud.dart';
 import 'package:five_control_widget/widget/main_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,6 +48,12 @@ void main() {
 
   testWidgets('Testing control button widget', (WidgetTester tester) async {
     DeckManager.addDeck(deckName: 'newDeck');
+    final fireStore = FakeFirebaseFirestore();
+    final cloud = Cloud(
+      fireStore,
+      'Test',
+          () => {},
+    );
 
     // Pump Widget
     await tester.pumpWidget(
@@ -61,6 +69,7 @@ void main() {
                     moveAnimation,
                     openedButton,
                     changeState: testChangeState,
+                    cloud: cloud,
                   )),
               );
             }

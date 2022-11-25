@@ -43,7 +43,7 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
     cloud = Cloud(
       widget.fireStore,
       widget.auth,
-      () => {setState(() {})},
+          () => {setState(() {})},
     );
 
     rotateController = AnimationController(
@@ -127,8 +127,9 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                 showDialog(
                     context: context,
                     barrierDismissible: false,
-                    builder: (context) => const Center(
-                            child: CircularProgressIndicator(
+                    builder: (context) =>
+                    const Center(
+                        child: CircularProgressIndicator(
                           color: Colors.blue,
                         )));
                 await DeckManager.removeAll();
@@ -234,7 +235,8 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LearningRoute(
+                          builder: (context) =>
+                              LearningRoute(
                                 deckIndex: index,
                                 changeState: () {
                                   setState(() {});
@@ -302,80 +304,84 @@ class _HomeRouteState extends State<HomeRoute> with TickerProviderStateMixin {
   void showRenameDia(int index) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Rename'),
-        content: TextFormField(
-          controller: deckNameController,
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              print(index);
-              if (deckNameController.text != '') {
-                bool flag = true;
-                for (int i = 0; i < DeckManager.deckList.length; i++) {
-                  if (DeckManager.deckList[i].deckName ==
-                      deckNameController.text) {
-                    flag = false;
-                  }
-                }
-                if (flag == true) {
-                  // DeckManager.deckList[index].deckName =
-                  //     deckNameController.text;
-                  DeckManager.deckList[index]
-                      .renameDeckOnCloud(index, deckNameController.text, cloud);
-                  deckNameController.text = '';
-                } else {
-                  Navigator.pop(context, 'OK');
-                  deckNameController.text = '';
-                  showAddDia('Your deck is already exist.',
-                      'Please choose other name.');
-                  return;
-                }
-              } else {
-                Navigator.pop(context, 'OK');
-                deckNameController.text = '';
-                showAddDia(
-                    'Your deck name is empty.', 'Please choose other name.');
-                return;
-              }
-              setState(() {});
-              Navigator.pop(context, 'OK');
-            },
-            child: Text(
-              'OK',
-              style: TextStyle(
-                color: AppTheme().currentTheme() == ThemeMode.dark
-                    ? Colors.white
-                    : Colors.black,
-              ),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Rename'),
+            content: TextFormField(
+              controller: deckNameController,
             ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  print(index);
+                  if (deckNameController.text != '') {
+                    bool flag = true;
+                    for (int i = 0; i < DeckManager.deckList.length; i++) {
+                      if (DeckManager.deckList[i].deckName ==
+                          deckNameController.text) {
+                        flag = false;
+                      }
+                    }
+                    if (flag == true) {
+                      // DeckManager.deckList[index].deckName =
+                      //     deckNameController.text;
+                      DeckManager.deckList[index]
+                          .renameDeckOnCloud(
+                          index, deckNameController.text, cloud);
+                      deckNameController.text = '';
+                    } else {
+                      Navigator.pop(context, 'OK');
+                      deckNameController.text = '';
+                      showAddDia('Your deck is already exist.',
+                          'Please choose other name.');
+                      return;
+                    }
+                  } else {
+                    Navigator.pop(context, 'OK');
+                    deckNameController.text = '';
+                    showAddDia(
+                        'Your deck name is empty.',
+                        'Please choose other name.');
+                    return;
+                  }
+                  setState(() {});
+                  Navigator.pop(context, 'OK');
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   void showAddDia(String title, String content) {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: Text(
-              'OK',
-              style: TextStyle(
-                color: AppTheme().currentTheme() == ThemeMode.dark
-                    ? Colors.white
-                    : Colors.black,
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
@@ -385,11 +391,10 @@ class SideBar extends StatelessWidget {
   final Function() setState;
   final Cloud cloud;
 
-  const SideBar(
-      {Key? key,
-      required this.auth,
-      required this.setState,
-      required this.cloud})
+  const SideBar({Key? key,
+    required this.auth,
+    required this.setState,
+    required this.cloud})
       : super(key: key);
 
   @override
@@ -406,14 +411,19 @@ class SideBar extends StatelessWidget {
             leading: Icon(Icons.search),
             title: Text('Card browser'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CardBrowserRoute(
-                          setHomeState: setState,
-                          cloud: cloud,
-                        )),
-              );
+              if (DeckManager.deckList.isEmpty) {
+                showAddDia(context, 'No Decks Found.', 'Please add a deck');
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CardBrowserRoute(
+                            setHomeState: setState,
+                            cloud: cloud,
+                          )),
+                );
+              }
             }, //TODO : implement
           ),
           const ListTile(
@@ -450,6 +460,30 @@ class SideBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showAddDia(dynamic context, String title, String content) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: AppTheme().currentTheme() == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
     );
   }
 }

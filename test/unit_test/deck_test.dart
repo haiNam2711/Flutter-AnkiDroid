@@ -11,19 +11,34 @@ void main() {
       DeckManager.addDeck(deckName: 'newDeck');
       CardInformation frontSide = CardInformation(text: 'front');
       CardInformation backSide = CardInformation(text: 'back');
-      FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      FlashCard flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+            () => {},
+      );
       DeckManager.deckList[0].addCard(flashCard: flashCard);
 
       CardInformation frontSide1 = CardInformation(text: 'front1');
       CardInformation backSide1 = CardInformation(text: 'back1');
-      FlashCard flashCard1 = FlashCard(frontSide1, backSide1, DateTime.now());
+      FlashCard flashCard1 = FlashCard(
+        frontSide1,
+        backSide1,
+        DateTime.now(),
+            () => {},
+      );
       DeckManager.deckList[0].addCard(flashCard: flashCard1);
 
       CardInformation frontSide2 = CardInformation(text: 'front2');
       CardInformation backSide2 = CardInformation(text: 'back2');
-      FlashCard flashCard2 = FlashCard(frontSide2, backSide2, DateTime.now());
+      FlashCard flashCard2 = FlashCard(
+        frontSide2,
+        backSide2,
+        DateTime.now(),
+            () => {},
+      );
       DeckManager.deckList[0].addCard(flashCard: flashCard2);
-      expect(DeckManager.deckList[0].getCardAmout(), 3);
+      expect(DeckManager.deckList[0].getCardAmount(), 3);
     });
 
     test('deck  should remove a card successfully', () {
@@ -48,7 +63,12 @@ void main() {
     test('deck should get true amount of GRADUATED card', () async {
       CardInformation frontSide = CardInformation(text: 'front');
       CardInformation backSide = CardInformation(text: 'back');
-      FlashCard flashCard = FlashCard(frontSide, backSide, DateTime.now());
+      FlashCard flashCard = FlashCard(
+        frontSide,
+        backSide,
+        DateTime.now(),
+            () => {},
+      );
       DeckManager.deckList[0].addCard(flashCard: flashCard);
 
       DeckManager.deckList[0].cardList[2].easyPress();
